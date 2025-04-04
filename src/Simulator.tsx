@@ -13,7 +13,7 @@ const Simulator = () => {
 
             {/* Right Side - Tabs and Content */}
             <div className="w-full md:w-1/2 flex items-center justify-center p-4">
-                <SimulationForm />
+                <SimulationForm className={{}}/>
             </div>
 
         </div>

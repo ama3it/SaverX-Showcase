@@ -23,11 +23,12 @@
     "clsx": "^2.1.1",
     "dotted-map": "^2.2.3",
     "framer-motion": "^12.6.3",
-    "lucide-react": "^0.486.0",
+    "lucide-react": "^0.487.0",
     "motion": "^12.6.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.55.0",
+    "recharts": "^2.15.2",
     "tailwind-merge": "^3.1.0",
     "tailwindcss": "^4.1.0",
     "three": "^0.175.0",
@@ -48,5 +49,9 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0"
-  }
+  },
+  "overrides": {
+  "react-is": "^19.0.0-rc-69d4b800-20241021"
+}
+
 }
