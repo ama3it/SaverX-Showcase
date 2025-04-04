@@ -1,6 +1,6 @@
 import { Tabs } from "@/components/ui/tabs";
 import Building from "@/components/ui/building";
-import Scene from "./components/mall";
+
 
 import {
     Table,
@@ -33,13 +33,13 @@ const officedata = [
         value: "13 hours/day"
     },
     {
-       name: "No of floors",
+        name: "No of floors",
         value: "11"
     },
     {
         name: "Duration",
-         value: "One Month"
-     }
+        value: "One Month"
+    }
 ]
 
 
@@ -57,13 +57,13 @@ const malldata = [
         value: "13 hours/day"
     },
     {
-       name: "No of floors",
+        name: "No of floors",
         value: "11"
     },
     {
         name: "Duration",
-         value: "One Month"
-     }
+        value: "One Month"
+    }
 ]
 export function BuildingInfo() {
     const tabs = [
@@ -71,9 +71,8 @@ export function BuildingInfo() {
             title: "Office",
             value: "Office",
             content: (
-                <div className="w-full overflow-hidden relative h-2/3 p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-[#183B4E] to-[#27548A]">
-                    <p>Office</p>
-                    <TableDemo buildingdata={officedata} />
+                <div className="w-full overflow-hidden relative h-2/3 p-10 text-xl md:text-4xl font-bold text-black bg-gradient-to-br from-gray-50 to-gray-200">
+                    <InfoTable buildingdata={officedata} />
                 </div>
             ),
         },
@@ -81,9 +80,9 @@ export function BuildingInfo() {
             title: "Mall",
             value: "Mall",
             content: (
-                <div className="w-full overflow-hidden relative h-2/3 p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-[#F26B0F] to-[#FCC737]">
-                    <p>Mall</p>
-                    <TableDemo buildingdata={malldata}  />
+                <div className="w-full overflow-hidden relative h-2/3 p-10 text-xl md:text-4xl font-bold text-black bg-gradient-to-br from-gray-50 to-gray-200">
+                   
+                    <InfoTable buildingdata={malldata} />
                 </div>
             ),
         }
@@ -118,14 +117,14 @@ const BuildngComponent = () => {
 export default BuildngComponent;
 
 
-export function TableDemo({ buildingdata }: TableDemoProps) {
+export function InfoTable({ buildingdata }: TableDemoProps) {
     return (
         <Table>
             <TableBody>
                 {buildingdata.map((data) => (
                     <TableRow key={data.name}>
-                        <TableCell className="font-medium">{data.name}</TableCell>
-                        <TableCell>{data.value}</TableCell>
+                        <TableCell className="font-medium text-xl text-gray-500 ">{data.name}:</TableCell>
+                        <TableCell className="text-xl text-gray-700 ">{data.value}</TableCell>
                     </TableRow>
                 ))}
             </TableBody>
