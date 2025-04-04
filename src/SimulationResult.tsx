@@ -138,11 +138,11 @@ export default function SimulationResult() {
     )
 
     return (
-        <div className="container flex items-center justify-center w-full h-full ">
+        <div className="container flex items-center justify-center w-full h-full z-0">
             {/* <p className="text-xl font-bold mb-4">
                 Predicted Energy Consumption without SaverX: 314232 kWh
             </p> */}
-            <Card className="overflow-hidden rounded-none shadow-none w-full p-5">
+            <Card className="overflow-hidden rounded-none shadow-none w-full p-5 ">
 
                 <CardContent className="px-2">
                     <ChartContainer

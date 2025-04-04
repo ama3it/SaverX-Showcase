@@ -165,7 +165,7 @@ function App() {
               opacity: resultOpacity,
               scale: resultScale,
               y: resultY,
-              zIndex: currentSection === 3 ? 2 : 1,
+              zIndex: 0,
               pointerEvents: currentSection === 3 ? 'auto' : 'none'
             }}
           >
