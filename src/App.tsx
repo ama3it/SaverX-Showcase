@@ -7,31 +7,53 @@ import './App.css'
 import SimulationResult from './SimulationResult'
 import ScrollArrow from './components/ScrollArrow'
 import { SimulationFormValues } from './lib/validation'
+import { SaverXPredictionResponse } from './lib/reponse'
 
 const transitionEase = easeInOut // Use a valid easing function
 
-const App=()=> {
+const App = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [resultData, setResultData] = useState<unknown>();
+  const [resultData, setResultData] = useState<SaverXPredictionResponse | null>(null);
 
   const handleSimulation = async (data: SimulationFormValues) => {
     setLoading(true);
     console.log("Simulation data:", data);
 
-    // Simulate API call or computation
-    const simulatedResult = await fakeApiCall();
-
-    setResultData(simulatedResult);
-    setLoading(false);
+    try {
+      const simulatedResult = await fetchPrediction(data);
+      setResultData(simulatedResult);
+    } catch (error) {
+      console.error("API call failed:", error);
+      // You might want to set an error state here
+    } finally {
+      setLoading(false);
+    }
   };
 
 
 
 
-  const fakeApiCall = () =>
-    new Promise((resolve) =>
-      setTimeout(() => resolve({ value: "Simulation Complete" }), 10000)
-    );
+  const fetchPrediction = async (data: SimulationFormValues) => {
+    const response = await fetch('http://localhost:5000/predict', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        cooling_water_temperature_setpoint: data.chilledWaterTemp,
+        chiller_setpoint_temperature: data.coolingWaterTemp,
+        ahu_opening_percentage: data.ahuOpening,
+        city: data.location.toLowerCase(),
+        building_type: 1
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  };
 
 
 
@@ -46,7 +68,7 @@ const App=()=> {
     const handleScroll = () => {
       const scrollPosition = window.scrollY
       const windowHeight = window.innerHeight
-      
+
       // Make the detection more precise by using exact multiples of window height
       if (scrollPosition < windowHeight) {
         setCurrentSection(0)
@@ -58,91 +80,91 @@ const App=()=> {
         setCurrentSection(3)
       }
     }
-    
+
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
 
- const handleScrollClick = () => {
-  const nextSection = currentSection + 1
-  
-  if (nextSection <= 3) {
-    // Exact multiple of window height for precise stopping
-    const targetY = nextSection * window.innerHeight
-    window.scrollTo({
-      top: targetY,
-      behavior: 'smooth'
-    })
+  const handleScrollClick = () => {
+    const nextSection = currentSection + 1
+
+    if (nextSection <= 3) {
+      // Exact multiple of window height for precise stopping
+      const targetY = nextSection * window.innerHeight
+      window.scrollTo({
+        top: targetY,
+        behavior: 'smooth'
+      })
+    }
   }
-}
 
 
   // SaverXIntro transitions
-  const introOpacity = useTransform(scrollYProgress, 
-    [0, 0.2, 0.25], 
-    [1, 1, 0], 
+  const introOpacity = useTransform(scrollYProgress,
+    [0, 0.2, 0.25],
+    [1, 1, 0],
     { ease: transitionEase }
   )
-  const introScale = useTransform(scrollYProgress, 
-    [0, 0.2, 0.25], 
-    [1, 1, 0.8], 
+  const introScale = useTransform(scrollYProgress,
+    [0, 0.2, 0.25],
+    [1, 1, 0.8],
     { ease: transitionEase }
   )
-  const introY = useTransform(scrollYProgress, 
-    [0, 0.2, 0.25], 
-    [0, 0, 50], 
+  const introY = useTransform(scrollYProgress,
+    [0, 0.2, 0.25],
+    [0, 0, 50],
     { ease: transitionEase }
   )
 
   // Building component transitions
-  const buildingOpacity = useTransform(scrollYProgress, 
-    [0.2, 0.25, 0.45, 0.5], 
-    [0, 1, 1, 0], 
+  const buildingOpacity = useTransform(scrollYProgress,
+    [0.2, 0.25, 0.45, 0.5],
+    [0, 1, 1, 0],
     { ease: transitionEase }
   )
-  const buildingScale = useTransform(scrollYProgress, 
-    [0.2, 0.25, 0.45, 0.5], 
-    [0.8, 1, 1, 0.8], 
+  const buildingScale = useTransform(scrollYProgress,
+    [0.2, 0.25, 0.45, 0.5],
+    [0.8, 1, 1, 0.8],
     { ease: transitionEase }
   )
-  const buildingY = useTransform(scrollYProgress, 
-    [0.2, 0.25, 0.45, 0.5], 
-    [50, 0, 0, -50], 
+  const buildingY = useTransform(scrollYProgress,
+    [0.2, 0.25, 0.45, 0.5],
+    [50, 0, 0, -50],
     { ease: transitionEase }
   )
 
   // Simulator component transitions
-  const simulatorOpacity = useTransform(scrollYProgress, 
-    [0.45, 0.5, 0.7, 0.75], 
-    [0, 1, 1, 0], 
+  const simulatorOpacity = useTransform(scrollYProgress,
+    [0.45, 0.5, 0.7, 0.75],
+    [0, 1, 1, 0],
     { ease: transitionEase }
   )
-  const simulatorScale = useTransform(scrollYProgress, 
-    [0.45, 0.5, 0.7, 0.75], 
-    [0.8, 1, 1, 0.8], 
+  const simulatorScale = useTransform(scrollYProgress,
+    [0.45, 0.5, 0.7, 0.75],
+    [0.8, 1, 1, 0.8],
     { ease: transitionEase }
   )
-  const simulatorY = useTransform(scrollYProgress, 
-    [0.45, 0.5, 0.7, 0.75], 
-    [50, 0, 0, -50], 
+  const simulatorY = useTransform(scrollYProgress,
+    [0.45, 0.5, 0.7, 0.75],
+    [50, 0, 0, -50],
     { ease: transitionEase }
   )
 
   // Result component transitions
-  const resultOpacity = useTransform(scrollYProgress, 
-    [0.7, 0.75, 1], 
-    [0, 1, 1], 
+  const resultOpacity = useTransform(scrollYProgress,
+    [0.7, 0.75, 1],
+    [0, 1, 1],
     { ease: transitionEase }
   )
-  const resultScale = useTransform(scrollYProgress, 
-    [0.7, 0.75, 1], 
-    [0.8, 1, 1], 
+  const resultScale = useTransform(scrollYProgress,
+    [0.7, 0.75, 1],
+    [0.8, 1, 1],
     { ease: transitionEase }
   )
-  const resultY = useTransform(scrollYProgress, 
-    [0.7, 0.75, 1], 
-    [50, 0, 0], 
+  const resultY = useTransform(scrollYProgress,
+    [0.7, 0.75, 1],
+    [50, 0, 0],
     { ease: transitionEase }
   )
 
@@ -169,7 +191,7 @@ const App=()=> {
               y: buildingY,
             }}
           >
-            <BuildingComponent />  {/* Corrected name */}
+            <BuildingComponent />  
           </motion.div>
 
           <motion.div
@@ -191,11 +213,15 @@ const App=()=> {
               opacity: resultOpacity,
               scale: resultScale,
               y: resultY,
-              zIndex: 0,
+              zIndex: currentSection === 3 ? 2 : 0,
               pointerEvents: currentSection === 3 ? 'auto' : 'none'
             }}
           >
-            <SimulationResult loading={loading} data={resultData} />
+            {
+              resultData && (
+                <SimulationResult loading={loading} chartData={resultData} />
+              )
+            }
           </motion.div>
         </div>
       </div>

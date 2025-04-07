@@ -2,7 +2,7 @@ import { z } from "zod";
 
 
 export const simulationFormSchema = z.object({
-  location: z.enum(["Hyderabad", "Delhi", "Chennai", "Tokyo", "Houston", "Dusseldorf"], {
+  location: z.enum(["hyderabad", "delhi", "chennai", "tokyo", "houston", "dusseldorf"], {
     required_error: "Please select a location",
   }),
   chilledWaterTemp: z.enum(["6", "7", "8", "9"], {

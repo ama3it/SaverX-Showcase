@@ -57,12 +57,12 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
                                                     </SelectTrigger>
                                                 </FormControl>
                                                 <SelectContent>
-                                                    <SelectItem value="Hyderabad">Hyderabad (IND)</SelectItem>
-                                                    <SelectItem value="Delhi">Delhi (IND)</SelectItem>
-                                                    <SelectItem value="Chennai">Chennai (IND)</SelectItem>
-                                                    <SelectItem value="Tokyo">Tokyo (JP)</SelectItem>
-                                                    <SelectItem value="Houston">Houston (US)</SelectItem>
-                                                    <SelectItem value="Dusseldorf">Dusseldorf (DE)</SelectItem>
+                                                    <SelectItem value="hyderabad">Hyderabad (IND)</SelectItem>
+                                                    <SelectItem value="delhi">Delhi (IND)</SelectItem>
+                                                    <SelectItem value="chennai">Chennai (IND)</SelectItem>
+                                                    <SelectItem value="tokyo">Tokyo (JP)</SelectItem>
+                                                    <SelectItem value="houston">Houston (US)</SelectItem>
+                                                    <SelectItem value="dusseldorf">Dusseldorf (DE)</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                             <FormMessage />
