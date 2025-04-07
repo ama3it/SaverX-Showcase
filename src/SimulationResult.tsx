@@ -5,8 +5,7 @@ import {
     Card,
     CardContent,
     CardDescription,
-    CardHeader,
-    CardTitle,
+    CardHeader
 } from "@/components/ui/card"
 import {
     ChartConfig,
@@ -14,6 +13,8 @@ import {
     ChartTooltip,
     ChartTooltipContent,
 } from "@/components/ui/chart"
+
+import EnhancedBWLoadingSteps, { steps } from "@/components/LoadingSteps";
 
 export const description = "An interactive bar chart"
 
@@ -125,7 +126,34 @@ const chartConfig = {
     },
 } satisfies ChartConfig
 
-export default function SimulationResult() {
+
+
+interface ResultProps {
+    loading: boolean;
+    data: unknown;
+}
+
+
+
+
+const ProgressiveMultiStepLoader = () => {
+    const [step, setStep] = React.useState(0);
+
+    React.useEffect(() => {
+        if (step < steps.length - 1) {
+            const isNeuralStep = steps[step]?.isNeuralNet;
+            const delay = isNeuralStep ? 5000 : 1000;
+
+            const timer = setTimeout(() => setStep((prev) => prev + 1), delay);
+            return () => clearTimeout(timer);
+        }
+    }, [step]);
+
+    return <EnhancedBWLoadingSteps currentStep={step} />;
+};
+
+
+const SimulationResult: React.FC<ResultProps> = ({ loading, data }) => {
     const [activeChart, setActiveChart] =
         React.useState<keyof typeof chartConfig>("desktop")
 
@@ -136,6 +164,10 @@ export default function SimulationResult() {
         }),
         []
     )
+
+    if (loading) {
+        return <ProgressiveMultiStepLoader />;
+    }
 
     return (
         <div className="container flex items-center justify-center w-full h-full z-0">
@@ -241,3 +273,6 @@ export default function SimulationResult() {
 
     )
 }
+
+
+export default SimulationResult

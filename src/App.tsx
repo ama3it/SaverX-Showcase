@@ -5,10 +5,36 @@ import SaverXIntro from "./SaverXIntro"
 import Simulator from "./Simulator"
 import './App.css'
 import SimulationResult from './SimulationResult'
+import ScrollArrow from './components/ScrollArrow'
+import { SimulationFormValues } from './lib/validation'
 
 const transitionEase = easeInOut // Use a valid easing function
 
-function App() {
+const App=()=> {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [resultData, setResultData] = useState<unknown>();
+
+  const handleSimulation = async (data: SimulationFormValues) => {
+    setLoading(true);
+    console.log("Simulation data:", data);
+
+    // Simulate API call or computation
+    const simulatedResult = await fakeApiCall();
+
+    setResultData(simulatedResult);
+    setLoading(false);
+  };
+
+
+
+
+  const fakeApiCall = () =>
+    new Promise((resolve) =>
+      setTimeout(() => resolve({ value: "Simulation Complete" }), 10000)
+    );
+
+
+
   const containerRef = useRef<HTMLDivElement>(null)
   const [currentSection, setCurrentSection] = useState(0)
   const { scrollYProgress } = useScroll({
@@ -156,7 +182,7 @@ function App() {
               pointerEvents: currentSection === 2 ? 'auto' : 'none'
             }}
           >
-            <Simulator />
+            <Simulator onSimulate={handleSimulation} />
           </motion.div>
 
           <motion.div
@@ -169,7 +195,7 @@ function App() {
               pointerEvents: currentSection === 3 ? 'auto' : 'none'
             }}
           >
-            <SimulationResult />
+            <SimulationResult loading={loading} data={resultData} />
           </motion.div>
         </div>
       </div>
@@ -179,38 +205,5 @@ function App() {
   )
 }
 
-
-const ScrollArrow = ({ onClick, currentSection }: { onClick: () => void; currentSection: number }) => {
-  return (
-    <motion.div
-      className="scroll-arrow"
-      initial={{ y: 0 }}
-      animate={{ 
-        y: [0, 10, 0],
-        opacity: currentSection === 3 ? 0 : 1 
-      }}
-      transition={{
-        duration: 2,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }}
-      onClick={onClick}
-      style={{
-        display: currentSection === 3 ? 'none' : 'flex'
-      }}
-    >
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-      >
-        <path d="M12 5v14M5 12l7 7 7-7" />
-      </svg>
-    </motion.div>
-  )
-}
 
 export default App
