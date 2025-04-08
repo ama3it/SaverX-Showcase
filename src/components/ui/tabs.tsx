@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { useBuilding } from "@/context/BuildingContext";
 
 type Tab = {
   title: string;
@@ -23,6 +24,9 @@ export const Tabs = ({
   tabClassName?: string;
   contentClassName?: string;
 }) => {
+
+  const {setSelectedBuilding}=useBuilding();
+    
   const [active, setActive] = useState<Tab>(propTabs[0]);
   const [tabs, setTabs] = useState<Tab[]>(propTabs);
 
@@ -32,6 +36,7 @@ export const Tabs = ({
     newTabs.unshift(selectedTab[0]);
     setTabs(newTabs);
     setActive(newTabs[0]);
+    setSelectedBuilding(newTabs[0].value as 'Office' | 'Mall');
   };
 
   const [hovering, setHovering] = useState(false);
@@ -62,7 +67,7 @@ export const Tabs = ({
                 layoutId="clickedbutton"
                 transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
                 className={cn(
-                  "absolute inset-0 bg-gray-200 dark:bg-zinc-800 rounded-full ",
+                  "absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-400 dark:bg-zinc-800  rounded-full ",
                   activeTabClassName
                 )}
               />
@@ -79,7 +84,7 @@ export const Tabs = ({
         active={active}
         key={active.value}
         hovering={hovering}
-        className={cn("mt-32", contentClassName)}
+        className={cn("mt-15", contentClassName)}
       />
     </>
   );

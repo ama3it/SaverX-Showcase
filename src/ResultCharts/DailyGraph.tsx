@@ -37,11 +37,16 @@ export function DailyGraph({ chartData }: { chartData: SaverXPredictionResponse 
             >
                 <CartesianGrid vertical={false} />
                 <XAxis
-                    dataKey="month"
+                    dataKey="date"
                     tickLine={false}
+                    tickMargin={10}
                     axisLine={false}
-                    tickMargin={8}
-                    tickFormatter={(value) => value.slice(6, 10)}
+                    tickFormatter={(value) => {
+                        const date = new Date(value);
+                        const day = date.getDate().toString().padStart(2, '0');
+                        const month = date.toLocaleDateString('en-US', { month: 'short' }).toLowerCase();
+                        return `${day} ${month}`;
+                    }}
                 />
                 <ChartTooltip
                     cursor={false}
@@ -51,17 +56,12 @@ export function DailyGraph({ chartData }: { chartData: SaverXPredictionResponse 
                     dataKey="normal"
                     type="natural"
                     fill="var(--color-mobile)"
-                    fillOpacity={0.4}
-                    stroke="var(--color-mobile)"
+                    fillOpacity={0.2}
+                    stroke="#D3D3D3"
                     stackId="1"
                 />
-                <XAxis 
-                    dataKey="date"
-                    tickLine={false}
-                    tickMargin={10}
-                    axisLine={false}
-                    tickFormatter={(value) => value.slice(6, 10)} />
-                <YAxis />
+           
+                <YAxis axisLine={false} label={{ value: "kWh", angle: -90, position: 'insideLeft' }}  />
                 <Area
                     dataKey="saverx"
                     type="natural"

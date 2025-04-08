@@ -13,11 +13,25 @@ const transitionEase = easeInOut // Use a valid easing function
 
 const App = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [resultData, setResultData] = useState<SaverXPredictionResponse | null>(null);
+  const [resultData, setResultData] = useState<SaverXPredictionResponse|[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [currentSection, setCurrentSection] = useState(0)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  })
 
   const handleSimulation = async (data: SimulationFormValues) => {
     setLoading(true);
     console.log("Simulation data:", data);
+
+    // Scroll to the results section
+    const targetY = 3 * window.innerHeight; // Scroll to the fourth section (index 3)
+    window.scrollTo({
+      top: targetY,
+      behavior: 'smooth'
+    });
+    setCurrentSection(3); // Update current section to the results section
 
     try {
       const simulatedResult = await fetchPrediction(data);
@@ -29,9 +43,6 @@ const App = () => {
       setLoading(false);
     }
   };
-
-
-
 
   const fetchPrediction = async (data: SimulationFormValues) => {
     const response = await fetch('http://localhost:5000/predict', {
@@ -52,17 +63,13 @@ const App = () => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    return await response.json();
+    const result = await response.json();
+    
+    // Add 5 second delay
+    await new Promise(resolve => setTimeout(resolve, 10000));
+    
+    return result;
   };
-
-
-
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [currentSection, setCurrentSection] = useState(0)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  })
 
   useEffect(() => {
     const handleScroll = () => {
@@ -218,9 +225,13 @@ const App = () => {
             }}
           >
             {
-              resultData && (
+              // resultData !==null ?
                 <SimulationResult loading={loading} chartData={resultData} />
-              )
+                // :
+                // <div className="result-placeholder">
+                //   <p className='text-md font-semibold'>Please run the simulation to see the results.</p>
+                // </div>
+              
             }
           </motion.div>
         </div>

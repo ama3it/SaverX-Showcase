@@ -126,7 +126,7 @@ function Building() {
   );
 }
 
-export default function Scene() {
+export default function BuildingScene() {
   return (
     
     <Canvas camera={{ position: [25, 25, 50], fov: 50 }} shadows>

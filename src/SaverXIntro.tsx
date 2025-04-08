@@ -22,9 +22,9 @@ const SaverXIntro = () => {
 
           {/* Right side - introduction text */}
           <div className="flex flex-col justify-center space-y-6 text-gray-600 dark:text-gray-400">
-            <h2 className="text-2xl font-semibold text-black dark:text-neutral-400">
+            {/* <h2 className="text-2xl font-semibold text-black dark:text-neutral-400">
               Intro
-            </h2>
+            </h2> */}
 
             <p className="text-base leading-relaxed">
               Welcome to the interactive demo of SaverX, our AI-driven intelligence for HVAC energy optimization.

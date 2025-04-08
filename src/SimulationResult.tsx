@@ -10,6 +10,7 @@ import EnhancedBWLoadingSteps, { steps } from "@/components/LoadingSteps";
 import { SaverXPredictionResponse } from "./lib/reponse";
 import { MonthlyCharts } from "./ResultCharts/MonthlyCharts";
 import { DailyGraph } from "./ResultCharts/DailyGraph";
+import { Square } from "lucide-react";
 
 export const description = "An interactive bar chart"
 
@@ -40,7 +41,7 @@ const ProgressiveMultiStepLoader = () => {
 
 
 const SimulationResult: React.FC<ResultProps> = ({ loading, chartData }) => {
-    const [activeChart, setActiveChart] =React.useState<string>("monthly")
+    const [activeChart, setActiveChart] = React.useState<string>("monthly")
 
     if (loading) {
         return <ProgressiveMultiStepLoader />;
@@ -62,11 +63,11 @@ const SimulationResult: React.FC<ResultProps> = ({ loading, chartData }) => {
                     <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
 
                         <CardDescription>
-                            <p className="text-xl font-bold text-black">
-                                Predicted Energy Consumption :  {chartData?.Energy_Consumption_without_SaverX || 0} kWh
+                            <p className="text-xl font-bold text-black flex items-center gap-2">
+                                <Square className="h-4 w-4 fill-[#D3D3D3] stroke-0" /> Energy Consumption: {chartData?.Energy_Consumption_without_SaverX || 0} kWh
                             </p>
-                            <p className="text-xl font-bold text-black">
-                                Predicted Energy Consumption with SaverX: {chartData?.Predicted_Energy_Consumption_with_SaverX || 0} kWh
+                            <p className="text-xl font-bold text-black flex items-center gap-2">
+                                <Square className="h-4 w-4 fill-[#2484a4] stroke-0" /> Energy Consumption (SaverX installed): {chartData?.Predicted_Energy_Consumption_with_SaverX || 0} kWh
                             </p>
                             <p className="text-xl font-bold text-black">Savings: {chartData.Predicted_Savings || 0} %</p>
                         </CardDescription>
@@ -74,7 +75,7 @@ const SimulationResult: React.FC<ResultProps> = ({ loading, chartData }) => {
                     <div className="flex">
 
                         <button
-                            className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6"
+                            className={" cursor-pointer elative z-30 flex flex-1 flex-col justify-center gap-1  px-6 py-4 text-left    sm:px-8 sm:py-6" + (activeChart === "monthly" ? " bg-muted" : "")}
                             onClick={() => setActiveChart("monthly")}
                         >
                             <span className="text-md font-bold text-foreground">
@@ -83,7 +84,8 @@ const SimulationResult: React.FC<ResultProps> = ({ loading, chartData }) => {
                         </button>
 
                         <button
-                            className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6"
+                            className={" cursor-pointer relative z-30 flex flex-1 flex-col justify-center gap-1  px-6 py-4 text-left  sm:px-8 sm:py-6" + (activeChart === "daily" ? " bg-muted" : "")}
+
                             onClick={() => setActiveChart("daily")}
                         >
                             <span className="text-md font-bold text-foreground">

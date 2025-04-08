@@ -1,6 +1,4 @@
 import { Tabs } from "@/components/ui/tabs";
-import Building from "@/components/ui/building";
-
 
 import {
     Table,
@@ -8,6 +6,9 @@ import {
     TableCell,
     TableRow,
 } from "@/components/ui/table"
+import { useBuilding } from "./context/BuildingContext";
+import ShoppingMallScene from "./components/ShoppingMall";
+import BuildingScene from "@/components/ui/building";
 
 interface BuildingData {
     name: string;
@@ -66,6 +67,7 @@ const malldata = [
     }
 ]
 export function BuildingInfo() {
+   
     const tabs = [
         {
             title: "Office",
@@ -81,7 +83,7 @@ export function BuildingInfo() {
             value: "Mall",
             content: (
                 <div className="w-full overflow-hidden relative h-2/3 p-10 text-xl md:text-4xl font-bold text-black bg-gradient-to-br from-gray-50 to-gray-200">
-                   
+
                     <InfoTable buildingdata={malldata} />
                 </div>
             ),
@@ -90,24 +92,34 @@ export function BuildingInfo() {
 
     return (
         <div className="h-full [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start">
-            <Tabs tabs={tabs} />
+            <p className="font-bold text-xl my-5">Please Select the building type</p>
+            <Tabs tabs={tabs}/>
         </div>
     );
 }
 
 const BuildngComponent = () => {
+
+    const {selectedBuilding}=useBuilding();
+    console.log("Selected Building:", selectedBuilding);
+
     return (
         <div className="flex flex-col md:flex-row w-full h-full">
             {/* Left Side - 3D Building */}
             <div className="w-full md:w-1/2 flex items-center justify-center bg-[#F8FAFC] p-4">
-                <Building />
-
-                {/* <Scene/> */}
+                {
+                    selectedBuilding === "Office" ?
+                        <BuildingScene />
+                        :
+                        <ShoppingMallScene/>
+                }
             </div>
 
             {/* Right Side - Tabs and Content */}
             <div className="w-full md:w-1/2 flex items-center justify-center p-4">
+            
                 <BuildingInfo />
+
             </div>
 
         </div>

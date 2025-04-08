@@ -35,7 +35,7 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
                 <Card className="overflow-hidden p-0 border-none rounded-none shadow-none w-full">
                     <CardHeader>
                         <CardTitle className="text-center text-2xl font-bold">
-                            Simulation Form
+                            Simulation
                         </CardTitle>
                         <CardDescription className="text-center text-sm">
                             Please fill in the details below to run the simulation.
@@ -142,8 +142,8 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
                                     )}
                                 />
 
-                                <Button type="submit" className="w-full bg-black hover:bg-gray-800 text-white">
-                                    Submit
+                                <Button type="submit" className="w-full bg-black hover:bg-gray-800 text-white cursor-pointer">
+                                    Simulate
                                 </Button>
                             </form>
                         </Form>
