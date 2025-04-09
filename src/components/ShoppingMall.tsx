@@ -1,8 +1,7 @@
-import React, { useRef, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls, Environment } from '@react-three/drei';
-import * as THREE from 'three';
-
+import React, { useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import { JSX } from 'react/jsx-runtime';
 // ShoppingMall component
 const ShoppingMall: React.FC = () => {
     // Constants for the building dimensions
@@ -16,7 +15,7 @@ const ShoppingMall: React.FC = () => {
 
     // Function to create columns at corners and middle areas
     const createColumns = () => {
-        const columns = [];
+        const columns: JSX.Element[] = [];
         const columnPositions = [
             // Corner columns
             { x: -FLOOR_WIDTH / 2 + 2, z: -FLOOR_LENGTH / 2 + 2 },
@@ -276,9 +275,6 @@ const ShoppingMall: React.FC = () => {
             {/* Roof structure */}
             {createRoof()}
 
-            {/* AC units on top */}
-           
-
             {/* Ground/foundation */}
             <mesh position={[0, -0.1, 0]} receiveShadow>
                 <boxGeometry args={[FLOOR_WIDTH + 10, 0.1, FLOOR_LENGTH + 10]} />
@@ -290,10 +286,11 @@ const ShoppingMall: React.FC = () => {
 
 // Auto-rotation controller component
 const AutoRotate: React.FC = () => {
-    const { camera } = useThree();
+    // const { camera } = useThree();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const controlsRef = useRef<any>(null);
 
-    useFrame((_, delta) => {
+    useFrame(() => {
         if (controlsRef.current) {
             controlsRef.current.autoRotate = true;
             controlsRef.current.autoRotateSpeed = 0.5; // Adjust speed as needed

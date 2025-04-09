@@ -433,11 +433,11 @@ const NeuralNetworkAnimation = () => (
         })}
 
         {/* Layer Labels */}
-        <text x="80" y="20" textAnchor="middle" fill="#666666" fontSize="14">Input</text>
+        <text x="80" y="20" textAnchor="middle" fill="#666666" fontSize="14">Input Layer</text>
         {/* <text x="200" y="20" textAnchor="middle" fill="#666666" fontSize="14">Hidden 1</text> */}
         {/* <text x="330" y="20" textAnchor="middle" fill="#666666" fontSize="14">Hidden 2</text> */}
         {/* <text x="470" y="20" textAnchor="middle" fill="#666666" fontSize="14">Hidden 3</text> */}
-        <text x="600" y="20" textAnchor="middle" fill="#666666" fontSize="14">Output</text>
+        <text x="600" y="20" textAnchor="middle" fill="#666666" fontSize="14">Output Layer</text>
     </svg>
 );
 

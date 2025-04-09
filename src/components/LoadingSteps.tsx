@@ -4,9 +4,9 @@ import { cn } from "@/lib/utils";
 export const steps = [
   { title: "Collecting parameters", description: "Gathering input data for simulation" },
   { title: "Initializing model", description: "Setting up the simulation environment" },
-  { title: "Running simulation", description: "Processing the data through our model" },
+  { title: "Invoking the ai model", description: "Processing the data through our model" },
   { title: "Neural Network Processing", isNeuralNet: true },
-  { title: "Finalizing results", description: "Post-processing and preparing output" },
+  { title: "Setting Up integration", description: "Communicating the optimal settings to HVAC system." },
 ];
 
 const BWLoadingSteps = ({ currentStep }: { currentStep: number }) => {
@@ -21,20 +21,22 @@ const BWLoadingSteps = ({ currentStep }: { currentStep: number }) => {
           <div
             key={index}
             className={cn(
-              "flex items-start gap-4 transition-all duration-500 ease-in-out",
-              isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
+              "flex items-start gap-4 transition-all duration-700 ease-in-out transform",
+              isVisible 
+                ? "opacity-100 translate-y-0" 
+                : "opacity-0 translate-y-4 pointer-events-none"
             )}
           >
             {/* Step Indicator */}
             <div className="flex flex-col items-center">
               <div
                 className={cn(
-                  "h-6 w-6 rounded-full border flex items-center justify-center transition-colors",
+                  "h-6 w-6 rounded-full border flex items-center justify-center transition-all duration-500",
                   isCompleted
-                    ? "bg-black border-black text-white"
+                    ? "bg-black border-black text-white scale-100"
                     : isActive
-                      ? "bg-black border-black"
-                      : "border-gray-300 text-transparent"
+                      ? "bg-black border-black scale-110"
+                      : "border-gray-300 text-transparent scale-95"
                 )}
               >
                 {isCompleted ? (
@@ -58,11 +60,11 @@ const BWLoadingSteps = ({ currentStep }: { currentStep: number }) => {
               </div>
 
               {/* Connector */}
-              {index < steps.length - 1 && currentStep > index && (
+              {index < steps.length - 1 && (
                 <div
                   className={cn(
-                    "w-px flex-grow mt-1 mb-1 transition-colors duration-500",
-                    isCompleted ? "bg-black" : "bg-gray-200"
+                    "w-px flex-grow mt-1 mb-1 transition-all duration-700",
+                    isCompleted ? "bg-black h-full" : "bg-gray-200 h-0"
                   )}
                   style={{ minHeight: "2rem" }}
                 />
@@ -70,9 +72,12 @@ const BWLoadingSteps = ({ currentStep }: { currentStep: number }) => {
             </div>
 
             {/* Step Content */}
-            <div className="flex-1 pt-0.5 w-full min-h-[3.5rem]">
-              <h3 className="text-sm font-semibold text-gray-800 flex items-center">
-                {step.title}
+            <div className="flex-1 pt-0.5 w-full min-h-[3.5rem] transition-all duration-500">
+              <h3 className={cn(
+                "text-sm font-semibold text-gray-800 flex items-center transition-all duration-500 ml-2",
+                isActive ? "transform scale-105" : ""
+              )}>
+                { step.title}
                 {isActive && !step.isNeuralNet && (
                   <span className="ml-2 inline-flex text-black">
                     <span className="animate-bounce delay-100">.</span>
@@ -100,7 +105,7 @@ const BWLoadingSteps = ({ currentStep }: { currentStep: number }) => {
                         isActive ? "opacity-100" : "opacity-40"
                       )}
                     >
-                      <NeuralNetworkAnimation key={`neural-${index}`} />
+                    <NeuralNetworkAnimation key={`neural-${index}`} />
                     </div>
                   </div>
                 </div>
@@ -115,7 +120,7 @@ const BWLoadingSteps = ({ currentStep }: { currentStep: number }) => {
 
 const EnhancedBWLoadingSteps = ({ currentStep }: { currentStep: number }) => {
   return (
-    <div className="space-y-10">
+    <div className="space-y-10 my-10">
       <BWLoadingSteps currentStep={currentStep} />
     </div>
   );

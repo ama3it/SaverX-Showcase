@@ -31,25 +31,25 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
             </div>
 
             {/* Right Side - Tabs and Content */}
-            <div className="w-full md:w-1/2 flex items-center justify-center p-4">
-                <Card className="overflow-hidden p-0 border-none rounded-none shadow-none w-full">
+            <div className="w-full md:w-1/2 flex items-center justify-center p-5">
+                <Card className="overflow-hidden p-0 border-none rounded-none shadow-none w-full ">
                     <CardHeader>
                         <CardTitle className="text-center text-2xl font-bold">
                             Simulation
                         </CardTitle>
                         <CardDescription className="text-center text-sm">
-                            Please fill in the details below to run the simulation.
+                            Fill in the details below to run the simulation.
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSimulate)} className="flex flex-col gap-4 p-2">
+                            <form onSubmit={form.handleSubmit(onSimulate)} className="flex flex-col gap-4 p-2 overflow-auto">
                                 <FormField
                                     control={form.control}
                                     name="location"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <Label className="my-2">Location</Label>
+                                            <Label>Select City</Label>
                                             <Select onValueChange={field.onChange} value={field.value}>
                                                 <FormControl>
                                                     <SelectTrigger className="w-full">
@@ -75,7 +75,7 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
                                     name="chilledWaterTemp"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <Label className="my-2">Chilled Water Temperature Setpoint (°C)</Label>
+                                            <Label>Chilled Water Temperature Setpoint (°C)</Label>
                                             <FormControl>
                                                 <RadioGroup
                                                     onValueChange={field.onChange}
@@ -99,7 +99,7 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
                                     name="coolingWaterTemp"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <Label className="my-2">Cooling Tower's Cooling Water Temperature (°C)</Label>
+                                            <Label>Cooling Tower's Cooling Water Temperature (°C)</Label>
                                             <FormControl>
                                                 <RadioGroup
                                                     onValueChange={field.onChange}
@@ -123,7 +123,7 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
                                     name="ahuOpening"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <Label className="my-2">AHU Opening in %</Label>
+                                            <Label>AHU Opening in %</Label>
                                             <FormControl>
                                                 <RadioGroup
                                                     onValueChange={field.onChange}

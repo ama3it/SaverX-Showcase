@@ -59,7 +59,7 @@ const malldata = [
     },
     {
         name: "No of floors",
-        value: "11"
+        value: "5"
     },
     {
         name: "Duration",
@@ -67,7 +67,7 @@ const malldata = [
     }
 ]
 export function BuildingInfo() {
-   
+
     const tabs = [
         {
             title: "Office",
@@ -91,18 +91,16 @@ export function BuildingInfo() {
     ];
 
     return (
-        <div className="h-full [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start">
-            <p className="font-bold text-xl my-5">Please Select the building type</p>
-            <Tabs tabs={tabs}/>
+        <div className="h-[90vh] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full mt-15 items-start justify-start">
+            <p className="font-bold text-xl my-5">Select Building type</p>
+            <Tabs tabs={tabs} />
         </div>
     );
 }
 
 const BuildngComponent = () => {
 
-    const {selectedBuilding}=useBuilding();
-    console.log("Selected Building:", selectedBuilding);
-
+    const { selectedBuilding } = useBuilding();
     return (
         <div className="flex flex-col md:flex-row w-full h-full">
             {/* Left Side - 3D Building */}
@@ -111,13 +109,13 @@ const BuildngComponent = () => {
                     selectedBuilding === "Office" ?
                         <BuildingScene />
                         :
-                        <ShoppingMallScene/>
+                        <ShoppingMallScene />
                 }
             </div>
 
             {/* Right Side - Tabs and Content */}
             <div className="w-full md:w-1/2 flex items-center justify-center p-4">
-            
+
                 <BuildingInfo />
 
             </div>

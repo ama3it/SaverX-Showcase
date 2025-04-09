@@ -1,12 +1,12 @@
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useRef, FC } from 'react';
-import { Mesh, Group } from 'three';
+import { Group } from 'three';
 import { OrbitControls } from '@react-three/drei';
 
 const Fan: FC<{ position: [number, number, number] }> = ({ position }) => {
   const fanRef = useRef<Group>(null);
 
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     if (fanRef.current) {
       fanRef.current.rotation.z += delta * 150;
     }
@@ -24,6 +24,7 @@ const Fan: FC<{ position: [number, number, number] }> = ({ position }) => {
           <mesh position={[0, 0.4, 0]} rotation={[0.2, 0, 0]}>
             <cylinderGeometry 
               args={[0.1, 0.01, 0.8, 3, 1]} // triangular prism shape
+              // @ts-expect-error rotataion object type 
               rotation={[Math.PI / 2, 0, 0]}
             />
             <meshStandardMaterial 

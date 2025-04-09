@@ -26,7 +26,7 @@ export function DailyGraph({ chartData }: { chartData: SaverXPredictionResponse 
     console.log("DailyGraph", chartData?.two_day_chart_data)
     return (
 
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig} className="h-[40vh] w-full">
             <AreaChart
                 accessibilityLayer
                 data={chartData?.two_day_chart_data}
@@ -42,10 +42,7 @@ export function DailyGraph({ chartData }: { chartData: SaverXPredictionResponse 
                     tickMargin={10}
                     axisLine={false}
                     tickFormatter={(value) => {
-                        const date = new Date(value);
-                        const day = date.getDate().toString().padStart(2, '0');
-                        const month = date.toLocaleDateString('en-US', { month: 'short' }).toLowerCase();
-                        return `${day} ${month}`;
+                        return value.split('-').slice(-1)[0]; // Gets the last part after splitting by '-'
                     }}
                 />
                 <ChartTooltip
@@ -57,17 +54,17 @@ export function DailyGraph({ chartData }: { chartData: SaverXPredictionResponse 
                     type="natural"
                     fill="var(--color-mobile)"
                     fillOpacity={0.2}
-                    stroke="#D3D3D3"
+                    stroke="#F0842C"
                     stackId="1"
                 />
-           
-                <YAxis axisLine={false} label={{ value: "kWh", angle: -90, position: 'insideLeft' }}  />
+
+                <YAxis axisLine={false} label={{ value: "kWh", angle: -90, position: 'insideLeft' }} />
                 <Area
                     dataKey="saverx"
                     type="natural"
                     fill="#FFFFFF"
                     fillOpacity={1}
-                    // stroke="var(--color-desktop)"
+                    stroke="#1B617D"
                     stackId="2"
                 />
             </AreaChart>

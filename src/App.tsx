@@ -9,11 +9,11 @@ import ScrollArrow from './components/ScrollArrow'
 import { SimulationFormValues } from './lib/validation'
 import { SaverXPredictionResponse } from './lib/reponse'
 
-const transitionEase = easeInOut // Use a valid easing function
+const transitionEase = easeInOut 
 
 const App = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [resultData, setResultData] = useState<SaverXPredictionResponse | []>([]);
+  const [resultData, setResultData] = useState<SaverXPredictionResponse | null >(null);
   const containerRef = useRef<HTMLDivElement>(null)
   const [currentSection, setCurrentSection] = useState(0)
   const { scrollYProgress } = useScroll({
@@ -35,15 +35,17 @@ const App = () => {
       const simulatedResult = await fetchPrediction(data);
       setResultData(simulatedResult);
     } catch (error) {
+      
       console.error("API call failed:", error);
-      // You might want to set an error state here
+      alert("An error occurred while fetching the prediction. Please try again.");
+      setResultData(null); // Reset result data on error
     } finally {
       setLoading(false);
     }
   };
 
   const fetchPrediction = async (data: SimulationFormValues) => {
-    const response = await fetch('http://localhost:5000/predict', {
+    const response = await fetch('https://saverxdemo-server-435059368913.asia-south1.run.app/predict', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -63,8 +65,8 @@ const App = () => {
 
     const result = await response.json();
 
-    // Add 5 second delay
-    await new Promise(resolve => setTimeout(resolve, 10000));
+    // Add 20 second delay
+    await new Promise(resolve => setTimeout(resolve, 15000));
 
     return result;
   };
@@ -73,8 +75,7 @@ const App = () => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY
       const windowHeight = window.innerHeight
-      const threshold = 50
-
+    
       const sectionIndex = Math.round(scrollPosition / windowHeight)
 
       const newSection = Math.max(0, Math.min(3, sectionIndex))

@@ -17,7 +17,7 @@ export const description = "An interactive bar chart"
 
 interface ResultProps {
     loading: boolean;
-    chartData: SaverXPredictionResponse;
+    chartData: SaverXPredictionResponse | null;
 }
 
 
@@ -49,53 +49,60 @@ const SimulationResult: React.FC<ResultProps> = ({ loading, chartData }) => {
 
     return (
         <div className="mx-24 my-24 flex items-center justify-center w-full h-full  ">
+        {
+            chartData?
             <Card className="overflow-hidden border-none rounded-none shadow-none w-full">
-                <CardContent className="px-2">
-                    {
-                        activeChart === "monthly" ?
-                            < MonthlyCharts chartData={chartData} />
-                            :
-                            <DailyGraph chartData={chartData} />
-                    }
-                </CardContent>
+            <CardContent className="px-2">
+                {
+                    activeChart === "monthly" ?
+                        < MonthlyCharts chartData={chartData} />
+                        :
+                        <DailyGraph chartData={chartData} />
+                }
+            </CardContent>
 
-                <CardHeader className="flex flex-col items-stretch space-y-0  p-0 sm:flex-row">
-                    <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
+            <CardHeader className="flex flex-col items-stretch space-y-0  p-0 sm:flex-row">
+                <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
 
-                        <CardDescription>
-                            <p className="text-xl  text-black flex items-center gap-2">
-                                <Square className="h-4 w-4 fill-[#D3D3D3] stroke-0" /> Energy Consumption: {chartData?.Energy_Consumption_without_SaverX || 0} kWh
-                            </p>
-                            <p className="text-xl  text-black flex items-center gap-2">
-                                <Square className="h-4 w-4 fill-[#2484a4] stroke-0" /> Energy Consumption (SaverX installed): {chartData?.Predicted_Energy_Consumption_with_SaverX || 0} kWh
-                            </p>
-                            <p className="text-xl font-bold text-black">Savings: {chartData.Predicted_Savings || 0} %</p>
-                        </CardDescription>
-                    </div>
-                    <div className="flex">
+                    <CardDescription>
+                        <p className="text-xl  text-black flex items-center gap-2">
+                            <Square className="h-4 w-4 fill-[#F0842C] stroke-0" /> Energy Consumption (in its original state): {chartData?.Energy_Consumption_without_SaverX || 0} kWh
+                        </p>
+                        <p className="text-xl  text-black flex items-center gap-2">
+                            <Square className="h-4 w-4 fill-[#1B617D] stroke-0" /> Energy Consumption (Saverx integrated): {chartData?.Predicted_Energy_Consumption_with_SaverX || 0} kWh
+                        </p>
+                        <p className="text-xl font-bold text-black">Savings: {chartData.Predicted_Savings || 0} %</p>
+                    </CardDescription>
+                </div>
+                <div className="flex">
 
-                        <button
-                            className={" cursor-pointer elative z-30 flex flex-1 flex-col justify-center gap-1  px-6 py-4 text-left    sm:px-8 sm:py-6" + (activeChart === "monthly" ? " bg-muted" : "")}
-                            onClick={() => setActiveChart("monthly")}
-                        >
-                            <span className="text-md font-bold text-foreground">
-                                Monthly
-                            </span>
-                        </button>
+                    <button
+                        className={" cursor-pointer elative z-30 flex flex-1 flex-col justify-center gap-1  px-2 py-2 text-left sm:px-4 sm:py-4" + (activeChart === "monthly" ? " bg-muted" : "")}
+                        onClick={() => setActiveChart("monthly")}
+                    >
+                        <span className="text-md font-bold text-foreground">
+                            Month
+                        </span>
+                    </button>
 
-                        <button
-                            className={" cursor-pointer relative z-30 flex flex-1 flex-col justify-center gap-1  px-6 py-4 text-left  sm:px-8 sm:py-6" + (activeChart === "daily" ? " bg-muted" : "")}
+                    <button
+                        className={" cursor-pointer relative z-30 flex flex-1 flex-col justify-center gap-1  px-6 py-4 text-left  sm:px-8 sm:py-6" + (activeChart === "daily" ? " bg-muted" : "")}
 
-                            onClick={() => setActiveChart("daily")}
-                        >
-                            <span className="text-md font-bold text-foreground">
-                                Daily
-                            </span>
-                        </button>
+                        onClick={() => setActiveChart("daily")}
+                    >
+                        <span className="text-md font-bold text-foreground">
+                            Day
+                        </span>
+                    </button>
 
-                    </div>
-                </CardHeader>
-            </Card>
+                </div>
+            </CardHeader>
+        </Card>
+            :
+            <div className="flex flex-col items-center justify-center w-full h-full">
+                <p className="text-md font-bold">No data available. Please run the simulation.</p>
+            </div>
+        }
         </div>
 
     )

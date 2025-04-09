@@ -22,19 +22,20 @@ const SaverXIntro = () => {
 
           {/* Right side - introduction text */}
           <div className="flex flex-col justify-center space-y-6 text-black dark:text-gray-400">
-            {/* <h2 className="text-2xl font-semibold text-black dark:text-neutral-400">
-              Intro
-            </h2> */}
-
-            <p className="text-base font-bold leading-relaxed">
-              Welcome to the interactive demo of SaverX, our AI-driven intelligence for HVAC energy optimization.
-            </p>
-            <p className="text-base leading-relaxed">
-              Explore the interface to understand the core features and impact of SaverX. You'll see
-              how it intelligently analyzes real-time building data, makes real-time changes in settings
-              of the HVAC systems, and seamlessly integrates with your existing infrastructure to
-              optimize energy usage.
-            </p>
+            <div className="flex items-stretch gap-6">
+              <div className="w-5 bg-black dark:bg-neutral-600 rounded-full"></div>
+              <div>
+                <p className="text-base font-bold leading-relaxed">
+                  Welcome to the interactive demo of SaverX, our AI-driven intelligence for HVAC energy optimization.
+                </p>
+                <p className="text-base leading-relaxed">
+                  Explore the interface to understand the core features and impact of SaverX. You'll see
+                  how it intelligently analyzes real-time building data, makes real-time changes in settings
+                  of the HVAC systems, and seamlessly integrates with your existing infrastructure to
+                  optimize energy usage.
+                </p>
+              </div>
+            </div>
             <div className="p-4 rounded-lg text-sm">
               <p className="font-sm  mb-2">Please note:</p>
               <ul className="list-disc list-inside space-y-2">
@@ -43,8 +44,6 @@ const SaverXIntro = () => {
                 <li>Insights shown here are generated in real-time.</li>
               </ul>
             </div>
-
-
           </div>
         </div>
       </div>

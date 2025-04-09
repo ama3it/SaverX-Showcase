@@ -66,8 +66,9 @@ html {
 }
 
 .scroll-arrow:hover {
-  background: rgb(166, 66, 66);
+  background: #1B617D;
   transform: scale(1.1);
+  color: #fff;
 }
 
 
