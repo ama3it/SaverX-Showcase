@@ -14,7 +14,7 @@ const SaverXIntro = () => {
           {/* Left side - centered content */}
           <div className="flex flex-col justify-center items-center">
             <div className="text-6xl font-bold text-black dark:text-neutral-400">
-              &nbsp;SaverX
+              SaverX
               <br />
               <FlipWords words={words} className="font-normal text-gray-500 text-2xl" />
             </div>
@@ -28,6 +28,7 @@ const SaverXIntro = () => {
                 <p className="text-base font-bold leading-relaxed">
                   Welcome to the interactive demo of SaverX, our AI-driven intelligence for HVAC energy optimization.
                 </p>
+                <br />
                 <p className="text-base leading-relaxed">
                   Explore the interface to understand the core features and impact of SaverX. You'll see
                   how it intelligently analyzes real-time building data, makes real-time changes in settings

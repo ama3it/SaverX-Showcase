@@ -110,6 +110,9 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+body {
+  font-family: "Montserrat", sans-serif;
+}
 @layer base {
   * {
     @apply border-border outline-ring/50;

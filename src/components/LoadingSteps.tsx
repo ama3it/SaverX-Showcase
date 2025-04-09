@@ -11,7 +11,7 @@ export const steps = [
 
 const BWLoadingSteps = ({ currentStep }: { currentStep: number }) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 h-[80vh]">
       {steps.map((step, index) => {
         const isVisible = index <= currentStep;
         const isActive = index === currentStep;

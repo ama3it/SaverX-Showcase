@@ -6,8 +6,12 @@ import Simulator from "./Simulator"
 import './App.css'
 import SimulationResult from './SimulationResult'
 import ScrollArrow from './components/ScrollArrow'
+import ScrollPrevArrow from './components/ScrollPrevArrow'
 import { SimulationFormValues } from './lib/validation'
 import { SaverXPredictionResponse } from './lib/reponse'
+import { isMobileDevice } from './utils/deviceDetection'
+import MobileBlocker from './components/MobileBlocker'
+import { useBuilding } from './context/BuildingContext'
 
 const transitionEase = easeInOut 
 
@@ -20,6 +24,9 @@ const App = () => {
     target: containerRef,
     offset: ["start start", "end end"]
   })
+  const [isMobile, setIsMobile] = useState(false);
+  const { selectedBuilding } = useBuilding();
+ 
 
   const handleSimulation = async (data: SimulationFormValues) => {
     setLoading(true);
@@ -45,6 +52,7 @@ const App = () => {
   };
 
   const fetchPrediction = async (data: SimulationFormValues) => {
+    const building_type=selectedBuilding==="Office"?"1":"2"
     const response = await fetch('https://saverxdemo-server-435059368913.asia-south1.run.app/predict', {
       method: 'POST',
       headers: {
@@ -55,7 +63,7 @@ const App = () => {
         chiller_setpoint_temperature: data.coolingWaterTemp,
         ahu_opening_percentage: data.ahuOpening,
         city: data.location.toLowerCase(),
-        building_type: 1
+        building_type: building_type
       })
     });
 
@@ -102,6 +110,17 @@ const App = () => {
     }
   }
 
+  const handleScrollPrevious = () => {
+    const prevSection = currentSection - 1
+
+    if (prevSection >= 0) {
+      const targetY = prevSection * window.innerHeight
+      window.scrollTo({
+        top: targetY,
+        behavior: 'smooth'
+      })
+    }
+  }
 
   // SaverXIntro transitions
   const introOpacity = useTransform(scrollYProgress,
@@ -171,6 +190,21 @@ const App = () => {
     { ease: transitionEase }
   )
 
+  useEffect(() => {
+    setIsMobile(isMobileDevice());
+    
+    const handleResize = () => {
+      setIsMobile(isMobileDevice());
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  if (isMobile) {
+    return <MobileBlocker />;
+  }
+  
   return (
     <div className="app-container">
       <div className="transition-section">
@@ -229,6 +263,7 @@ const App = () => {
         </div>
       </div>
 
+      <ScrollPrevArrow onClick={handleScrollPrevious} currentSection={currentSection} />
       <ScrollArrow onClick={handleScrollClick} currentSection={currentSection} />
     </div>
   )

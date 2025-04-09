@@ -42,7 +42,7 @@ const ProgressiveMultiStepLoader = () => {
 
 const SimulationResult: React.FC<ResultProps> = ({ loading, chartData }) => {
     const [activeChart, setActiveChart] = React.useState<string>("monthly")
-
+    
     if (loading) {
         return <ProgressiveMultiStepLoader />;
     }

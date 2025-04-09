@@ -54,8 +54,8 @@ html {
   bottom: 2rem;
   right: 2rem;
   z-index: 10;
-  color: #000;
-  background: rgba(255, 255, 255, 0.8);
+  color: #fff;
+  background:#1B617D ;
   padding: 0.5rem;
   border-radius: 50%;
   cursor: pointer;
@@ -66,11 +66,26 @@ html {
 }
 
 .scroll-arrow:hover {
-  background: #1B617D;
+  background: rgba(255, 255, 255, 0.8);
   transform: scale(1.1);
-  color: #fff;
+  color: #000;
 }
 
+.scroll-arrow-prev {
+  position: fixed;
+  bottom: 2rem;
+  right: 6rem;
+  z-index: 10;
+  color: #fff;
+  background:#1B617D ;
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 
 @layer base {
@@ -88,5 +103,14 @@ html {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
   }
 }
