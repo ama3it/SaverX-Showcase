@@ -13,20 +13,20 @@ const SaverXIntro = () => {
         <div className="grid grid-cols-2 gap-8">
           {/* Left side - centered content */}
           <div className="flex flex-col justify-center items-center">
-            <div className="text-3xl font-bold text-black dark:text-neutral-400">
+            <div className="text-6xl font-bold text-black dark:text-neutral-400">
               &nbsp;SaverX
               <br />
-              <FlipWords words={words} className="font-normal text-gray-500 text-xl" />
+              <FlipWords words={words} className="font-normal text-gray-500 text-2xl" />
             </div>
           </div>
 
           {/* Right side - introduction text */}
-          <div className="flex flex-col justify-center space-y-6 text-gray-600 dark:text-gray-400">
+          <div className="flex flex-col justify-center space-y-6 text-black dark:text-gray-400">
             {/* <h2 className="text-2xl font-semibold text-black dark:text-neutral-400">
               Intro
             </h2> */}
 
-            <p className="text-base leading-relaxed">
+            <p className="text-base font-bold leading-relaxed">
               Welcome to the interactive demo of SaverX, our AI-driven intelligence for HVAC energy optimization.
             </p>
             <p className="text-base leading-relaxed">

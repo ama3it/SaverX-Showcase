@@ -24,13 +24,13 @@ const chartConfig = {
 export function MonthlyCharts({ chartData }: { chartData: SaverXPredictionResponse }) {
     console.log("MonthlyCharts", chartData.monthly_chart_data)
     return (
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig} className="h-[40vh] w-full">
             <BarChart accessibilityLayer data={chartData?.monthly_chart_data}>
                 <defs>
                     <linearGradient id="saverxGradient" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stopColor="#2484a4" />
                         <stop offset="100%" stopColor="#1b617d" />
-                    </linearGradient>
+                    </linearGradient>60
                 </defs>
                 <CartesianGrid strokeDasharray="5 5" />
                 <XAxis
@@ -52,8 +52,8 @@ export function MonthlyCharts({ chartData }: { chartData: SaverXPredictionRespon
                     cursor={false}
                     content={<ChartTooltipContent indicator="dashed" />}
                 />
-                <Bar dataKey="normal" fill="#D3D3D3" radius={4} />
-                <Bar dataKey="saverx" fill="url(#saverxGradient)" radius={4} />
+                <Bar dataKey="normal" fill="#F0842C" radius={4} />
+                <Bar dataKey="saverx" fill="#1B617D" radius={4} />
             </BarChart>
         </ChartContainer>
     )

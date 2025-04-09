@@ -48,7 +48,7 @@ const SimulationResult: React.FC<ResultProps> = ({ loading, chartData }) => {
     }
 
     return (
-        <div className="mx-10 flex items-center justify-center w-full h-full  ">
+        <div className="mx-24 my-24 flex items-center justify-center w-full h-full  ">
             <Card className="overflow-hidden border-none rounded-none shadow-none w-full">
                 <CardContent className="px-2">
                     {
@@ -63,10 +63,10 @@ const SimulationResult: React.FC<ResultProps> = ({ loading, chartData }) => {
                     <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
 
                         <CardDescription>
-                            <p className="text-xl font-bold text-black flex items-center gap-2">
+                            <p className="text-xl  text-black flex items-center gap-2">
                                 <Square className="h-4 w-4 fill-[#D3D3D3] stroke-0" /> Energy Consumption: {chartData?.Energy_Consumption_without_SaverX || 0} kWh
                             </p>
-                            <p className="text-xl font-bold text-black flex items-center gap-2">
+                            <p className="text-xl  text-black flex items-center gap-2">
                                 <Square className="h-4 w-4 fill-[#2484a4] stroke-0" /> Energy Consumption (SaverX installed): {chartData?.Predicted_Energy_Consumption_with_SaverX || 0} kWh
                             </p>
                             <p className="text-xl font-bold text-black">Savings: {chartData.Predicted_Savings || 0} %</p>

@@ -13,7 +13,7 @@ const transitionEase = easeInOut // Use a valid easing function
 
 const App = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [resultData, setResultData] = useState<SaverXPredictionResponse|[]>([]);
+  const [resultData, setResultData] = useState<SaverXPredictionResponse | []>([]);
   const containerRef = useRef<HTMLDivElement>(null)
   const [currentSection, setCurrentSection] = useState(0)
   const { scrollYProgress } = useScroll({
@@ -23,8 +23,6 @@ const App = () => {
 
   const handleSimulation = async (data: SimulationFormValues) => {
     setLoading(true);
-    console.log("Simulation data:", data);
-
     // Scroll to the results section
     const targetY = 3 * window.innerHeight; // Scroll to the fourth section (index 3)
     window.scrollTo({
@@ -64,10 +62,10 @@ const App = () => {
     }
 
     const result = await response.json();
-    
+
     // Add 5 second delay
     await new Promise(resolve => setTimeout(resolve, 10000));
-    
+
     return result;
   };
 
@@ -75,23 +73,20 @@ const App = () => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY
       const windowHeight = window.innerHeight
+      const threshold = 50
 
-      // Make the detection more precise by using exact multiples of window height
-      if (scrollPosition < windowHeight) {
-        setCurrentSection(0)
-      } else if (scrollPosition < windowHeight * 2) {
-        setCurrentSection(1)
-      } else if (scrollPosition < windowHeight * 3) {
-        setCurrentSection(2)
-      } else {
-        setCurrentSection(3)
+      const sectionIndex = Math.round(scrollPosition / windowHeight)
+
+      const newSection = Math.max(0, Math.min(3, sectionIndex))
+      if (newSection !== currentSection) {
+        setCurrentSection(newSection)
       }
     }
 
-    window.addEventListener('scroll', handleScroll)
+    // Use passive listener for better scroll performance
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
+  }, [currentSection])
 
   const handleScrollClick = () => {
     const nextSection = currentSection + 1
@@ -185,6 +180,8 @@ const App = () => {
               opacity: introOpacity,
               scale: introScale,
               y: introY,
+              zIndex: currentSection === 0 ? 4 : 0,
+              pointerEvents: currentSection === 0 ? 'auto' : 'none'
             }}
           >
             <SaverXIntro />
@@ -196,9 +193,11 @@ const App = () => {
               opacity: buildingOpacity,
               scale: buildingScale,
               y: buildingY,
+              zIndex: currentSection === 1 ? 3 : 0,
+              pointerEvents: currentSection === 1 ? 'auto' : 'none'
             }}
           >
-            <BuildingComponent />  
+            <BuildingComponent />
           </motion.div>
 
           <motion.div
@@ -207,7 +206,7 @@ const App = () => {
               opacity: simulatorOpacity,
               scale: simulatorScale,
               y: simulatorY,
-              zIndex: currentSection === 2 ? 2 : 1,
+              zIndex: currentSection === 2 ? 2 : 0,
               pointerEvents: currentSection === 2 ? 'auto' : 'none'
             }}
           >
@@ -220,19 +219,11 @@ const App = () => {
               opacity: resultOpacity,
               scale: resultScale,
               y: resultY,
-              zIndex: currentSection === 3 ? 2 : 0,
+              zIndex: currentSection === 3 ? 1 : 0,
               pointerEvents: currentSection === 3 ? 'auto' : 'none'
             }}
           >
-            {
-              // resultData !==null ?
-                <SimulationResult loading={loading} chartData={resultData} />
-                // :
-                // <div className="result-placeholder">
-                //   <p className='text-md font-semibold'>Please run the simulation to see the results.</p>
-                // </div>
-              
-            }
+            <SimulationResult loading={loading} chartData={resultData} />
           </motion.div>
         </div>
       </div>
