@@ -1,24 +1,28 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
-const ScrollArrow = ({ onClick, currentSection }: { onClick: () => void; currentSection: number }) => {
+interface ScrollArrowProps {
+    onClick: () => void;
+    currentSection: number;
+    isNextSectionDisabled?: boolean;
+}
+
+const ScrollArrow = ({ onClick, currentSection, isNextSectionDisabled }: ScrollArrowProps) => {
     return (
         <motion.div
-        className="scroll-arrow"
-        initial={{ x: 0 }}
-        // animate={{
-        //     x: [0, 10, 0],
-        //     // opacity: currentSection === 3 ? 0 : 1
-        // }}
-        transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut"
-        }}
-        onClick={onClick}
-        style={{
-            display: currentSection === 3 ? 'none' : 'flex'
-        }}
-    >
+            className={`scroll-arrow ${isNextSectionDisabled ? 'disabled' : ''}`}
+            initial={{ x: 0 }}
+            transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+            }}
+            onClick={isNextSectionDisabled ? undefined : onClick}
+            style={{
+                display: currentSection === 3 ? 'none' : 'flex',
+                opacity: isNextSectionDisabled ? 0.5 : 1,
+                cursor: isNextSectionDisabled ? 'not-allowed' : 'pointer'
+            }}
+        >
             <svg
                 width="24"
                 height="24"

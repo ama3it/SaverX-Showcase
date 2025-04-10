@@ -24,22 +24,23 @@ export const Tabs = ({
   tabClassName?: string;
   contentClassName?: string;
 }) => {
-
-  const {setSelectedBuilding}=useBuilding();
-    
+  const { setSelectedBuilding } = useBuilding();
   const [active, setActive] = useState<Tab>(propTabs[0]);
   const [tabs, setTabs] = useState<Tab[]>(propTabs);
+  const [hovering, setHovering] = useState(false);
 
   const moveSelectedTabToTop = (idx: number) => {
     const newTabs = [...propTabs];
     const selectedTab = newTabs.splice(idx, 1);
     newTabs.unshift(selectedTab[0]);
-    setTabs(newTabs);
-    setActive(newTabs[0]);
-    setSelectedBuilding(newTabs[0].value as 'Office' | 'Mall');
-  };
 
-  const [hovering, setHovering] = useState(false);
+    // Use requestAnimationFrame to batch state updates
+    requestAnimationFrame(() => {
+      setTabs(newTabs);
+      setActive(newTabs[0]);
+      setSelectedBuilding(newTabs[0].value as "Office" | "Mall");
+    });
+  };
 
   return (
     <>
@@ -50,24 +51,34 @@ export const Tabs = ({
         )}
       >
         {propTabs.map((tab, idx) => (
-          <button
+          <motion.button
             key={tab.title}
-            onClick={() => {
-              moveSelectedTabToTop(idx);
-            }}
+            onClick={() => moveSelectedTabToTop(idx)}
             onMouseEnter={() => setHovering(true)}
             onMouseLeave={() => setHovering(false)}
             className={cn("relative px-4 py-2 rounded-full cursor-pointer", tabClassName)}
             style={{
               transformStyle: "preserve-3d",
             }}
+            whileTap={{ scale: 0.95 }}
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 30,
+            }}
           >
             {active.value === tab.value && (
               <motion.div
                 layoutId="clickedbutton"
-                transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
+                transition={{
+                  type: "spring",
+                  bounce: 0.2,
+                  duration: 0.5,
+                  stiffness: 400,
+                  damping: 30,
+                }}
                 className={cn(
-                  "absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-400 dark:bg-zinc-800  rounded-full ",
+                  "absolute inset-0 bg-amber-500 dark:bg-zinc-800 rounded-full",
                   activeTabClassName
                 )}
               />
@@ -76,7 +87,7 @@ export const Tabs = ({
             <span className="relative block text-black dark:text-white">
               {tab.title}
             </span>
-          </button>
+          </motion.button>
         ))}
       </div>
       <FadeInDiv

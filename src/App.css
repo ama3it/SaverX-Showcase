@@ -87,6 +87,9 @@ html {
   justify-content: center;
 }
 
+.scroll-arrow.disabled {
+  pointer-events: none;
+}
 
 @layer base {
   :root {

@@ -10,40 +10,39 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 
 import HvacScene from "./components/Hvac";
 
-
 interface SimulatorProps {
     onSimulate: (data: SimulationFormValues) => Promise<void>;
 }
 
 const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
-
     const form = useForm<SimulationFormValues>({
         resolver: zodResolver(simulationFormSchema),
     });
 
+    // Add this to check if form is complete
+    const isFormComplete = form.watch(['location', 'chilledWaterTemp', 'coolingWaterTemp', 'ahuOpening']).every(Boolean);
 
-    ;
     return (
         <div className="flex flex-col md:flex-row w-full h-full">
             {/* Left Side - 3D Building */}
-            <div className="w-full md:w-1/2 flex items-center justify-center bg-[#F8FAFC] p-4">
+            <div className="w-full md:w-1/2 flex items-center justify-center bg-[#F8FAFC] p-5">
                 <HvacScene />
             </div>
 
             {/* Right Side - Tabs and Content */}
-            <div className="w-full md:w-1/2 flex items-center justify-center p-5">
-                <Card className="overflow-hidden p-0 border-none rounded-none shadow-none w-full ">
-                    <CardHeader>
-                        <CardTitle className="text-center text-2xl font-bold">
+            <div className="w-full md:w-1/2  flex items-center justify-center"> {/* reduced padding */}
+                <Card className="overflow-hidden p-0 border-none rounded-none shadow-none w-full max-w-md"> {/* added max-width */}
+                    <CardHeader className=""> {/* reduced padding */}
+                        <CardTitle className="text-xl font-bold text-center"> {/* reduced text size */}
                             Simulation
                         </CardTitle>
-                        <CardDescription className="text-center text-sm">
+                        <CardDescription className="text-sm text-center"> {/* reduced text size */}
                             Fill in the details below to run the simulation.
                         </CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className=""> {/* reduced padding */}
                         <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSimulate)} className="flex flex-col gap-4 p-2 overflow-auto">
+                            <form onSubmit={form.handleSubmit(onSimulate)} className="flex flex-col gap-2 overflow-auto"> {/* reduced gap */}
                                 <FormField
                                     control={form.control}
                                     name="location"
@@ -53,7 +52,7 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
                                             <Select onValueChange={field.onChange} value={field.value}>
                                                 <FormControl>
                                                     <SelectTrigger className="w-full">
-                                                        <SelectValue placeholder="Select a location" />
+                                                        <SelectValue placeholder="Select city" />
                                                     </SelectTrigger>
                                                 </FormControl>
                                                 <SelectContent>
@@ -142,7 +141,15 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
                                     )}
                                 />
 
-                                <Button type="submit" className="w-full bg-black hover:bg-gray-800 text-white cursor-pointer">
+                                <Button
+                                    type="submit"
+                                    className="w-full bg-black hover:bg-gray-800 text-white cursor-pointer"
+                                    disabled={!isFormComplete}
+                                    style={{
+                                        opacity: isFormComplete ? 1 : 0.5,
+                                        cursor: isFormComplete ? 'pointer' : 'not-allowed'
+                                    }}
+                                >
                                     Simulate
                                 </Button>
                             </form>

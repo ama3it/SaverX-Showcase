@@ -30,22 +30,29 @@ const App = () => {
 
   const handleSimulation = async (data: SimulationFormValues) => {
     setLoading(true);
-    // Scroll to the results section
-    const targetY = 3 * window.innerHeight; // Scroll to the fourth section (index 3)
-    window.scrollTo({
-      top: targetY,
-      behavior: 'smooth'
-    });
-    setCurrentSection(3); // Update current section to the results section
-
+    if (!resultData && !loading) {
+      const targetY = 3 * window.innerHeight;
+      window.scrollTo({
+        top: targetY,
+        behavior: 'smooth'
+      });
+      setCurrentSection(3);
+    }
+    
     try {
       const simulatedResult = await fetchPrediction(data);
       setResultData(simulatedResult);
     } catch (error) {
-      
       console.error("API call failed:", error);
       alert("An error occurred while fetching the prediction. Please try again.");
-      setResultData(null); // Reset result data on error
+      setResultData(null);
+      // Scroll back to simulator section on error
+      const targetY = 2 * window.innerHeight;
+      window.scrollTo({
+        top: targetY,
+        behavior: 'smooth'
+      });
+      setCurrentSection(2);
     } finally {
       setLoading(false);
     }
@@ -86,6 +93,16 @@ const App = () => {
     
       const sectionIndex = Math.round(scrollPosition / windowHeight)
 
+      // Prevent scrolling to result section (index 3) if no data and not loading
+      if (sectionIndex === 3 && !resultData && !loading) {
+        // Force scroll back to simulator section
+        window.scrollTo({
+          top: 2 * windowHeight,
+          behavior: 'smooth'
+        })
+        return
+      }
+
       const newSection = Math.max(0, Math.min(3, sectionIndex))
       if (newSection !== currentSection) {
         setCurrentSection(newSection)
@@ -95,18 +112,22 @@ const App = () => {
     // Use passive listener for better scroll performance
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [currentSection])
+  }, [currentSection, resultData, loading]) // Add resultData and loading to dependencies
 
   const handleScrollClick = () => {
-    const nextSection = currentSection + 1
+    const nextSection = currentSection + 1;
+    
+    // Prevent scrolling to result section if no data and not loading
+    if (nextSection === 3 && !resultData && !loading) {
+      return;
+    }
 
     if (nextSection <= 3) {
-      // Exact multiple of window height for precise stopping
-      const targetY = nextSection * window.innerHeight
+      const targetY = nextSection * window.innerHeight;
       window.scrollTo({
         top: targetY,
         behavior: 'smooth'
-      })
+      });
     }
   }
 
@@ -264,7 +285,11 @@ const App = () => {
       </div>
 
       <ScrollPrevArrow onClick={handleScrollPrevious} currentSection={currentSection} />
-      <ScrollArrow onClick={handleScrollClick} currentSection={currentSection} />
+      <ScrollArrow 
+        onClick={handleScrollClick} 
+        currentSection={currentSection} 
+        isNextSectionDisabled={currentSection === 2 && !resultData && !loading} 
+      />
     </div>
   )
 }

@@ -19,6 +19,11 @@ interface TableDemoProps {
     buildingdata: BuildingData[];
 }
 
+function getLastMonth(): string {
+    const date = new Date();
+    date.setMonth(date.getMonth() - 1);
+    return date.toLocaleString('default', { month: 'long' });
+}
 
 const officedata = [
     {
@@ -39,10 +44,9 @@ const officedata = [
     },
     {
         name: "Duration",
-        value: "One Month"
+        value: `${getLastMonth()} (one month)`
     }
 ]
-
 
 const malldata = [
     {
@@ -63,9 +67,10 @@ const malldata = [
     },
     {
         name: "Duration",
-        value: "One Month"
+        value: `${getLastMonth()} (one month)`
     }
 ]
+
 export function BuildingInfo() {
 
     const tabs = [
@@ -92,7 +97,7 @@ export function BuildingInfo() {
 
     return (
         <div className="h-[90vh] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full mt-15 items-start justify-start">
-            <p className="font-bold text-xl my-5">Select Building type</p>
+            <p className="font-bold text-2xl my-5 mx-auto">Select Building type</p>
             <Tabs tabs={tabs} />
         </div>
     );

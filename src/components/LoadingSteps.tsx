@@ -11,7 +11,7 @@ export const steps = [
 
 const BWLoadingSteps = ({ currentStep }: { currentStep: number }) => {
   return (
-    <div className="space-y-6 h-[80vh]">
+    <div className="space-y-4">
       {steps.map((step, index) => {
         const isVisible = index <= currentStep;
         const isActive = index === currentStep;
@@ -31,7 +31,7 @@ const BWLoadingSteps = ({ currentStep }: { currentStep: number }) => {
             <div className="flex flex-col items-center">
               <div
                 className={cn(
-                  "h-6 w-6 rounded-full border flex items-center justify-center transition-all duration-500",
+                  "h-4 w-4 rounded-full border flex items-center justify-center transition-all duration-500",
                   isCompleted
                     ? "bg-black border-black text-white scale-100"
                     : isActive
@@ -66,13 +66,13 @@ const BWLoadingSteps = ({ currentStep }: { currentStep: number }) => {
                     "w-px flex-grow mt-1 mb-1 transition-all duration-700",
                     isCompleted ? "bg-black h-full" : "bg-gray-200 h-0"
                   )}
-                  style={{ minHeight: "2rem" }}
+                  style={{ minHeight: "1rem" }}
                 />
               )}
             </div>
 
             {/* Step Content */}
-            <div className="flex-1 pt-0.5 w-full min-h-[3.5rem] transition-all duration-500">
+            <div className="flex-1 pt-0.5 w-full min-h-[2.5rem] transition-all duration-500">
               <h3 className={cn(
                 "text-sm font-semibold text-gray-800 flex items-center transition-all duration-500 ml-2",
                 isActive ? "transform scale-105" : ""
@@ -98,7 +98,7 @@ const BWLoadingSteps = ({ currentStep }: { currentStep: number }) => {
                     isVisible ? "opacity-100" : "opacity-0"
                   )}
                 >
-                  <div className="w-full h-80 p-4 flex items-center justify-center">
+                  <div className="w-full h-48 p-2 flex items-center justify-center">
                     <div
                       className={cn(
                         "w-full h-full transition-opacity duration-500 ease-in-out",
@@ -120,8 +120,10 @@ const BWLoadingSteps = ({ currentStep }: { currentStep: number }) => {
 
 const EnhancedBWLoadingSteps = ({ currentStep }: { currentStep: number }) => {
   return (
-    <div className="space-y-10 my-10">
-      <BWLoadingSteps currentStep={currentStep} />
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="space-y-6">
+        <BWLoadingSteps currentStep={currentStep} />
+      </div>
     </div>
   );
 };
