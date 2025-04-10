@@ -29,7 +29,7 @@ const ProgressiveMultiStepLoader = () => {
     React.useEffect(() => {
         if (step < steps.length - 1) {
             const isNeuralStep = steps[step]?.isNeuralNet;
-            const delay = isNeuralStep ? 5000 : 1000;
+            const delay = isNeuralStep ? 15000 : 1000;
 
             const timer = setTimeout(() => setStep((prev) => prev + 1), delay);
             return () => clearTimeout(timer);

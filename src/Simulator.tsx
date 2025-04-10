@@ -20,7 +20,7 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
     });
 
     // Add this to check if form is complete
-    const isFormComplete = form.watch(['location', 'chilledWaterTemp', 'coolingWaterTemp', 'ahuOpening']).every(Boolean);
+    // const isFormComplete = form.watch(['location', 'chilledWaterTemp', 'coolingWaterTemp', 'ahuOpening']).every(Boolean);
 
     return (
         <div className="flex flex-col md:flex-row w-full h-full">
@@ -143,11 +143,11 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
 
                                 <Button
                                     type="submit"
-                                    className="w-full bg-black hover:bg-gray-800 text-white cursor-pointer"
-                                    disabled={!isFormComplete}
+                                    className="w-full bg-[#1b617d] hover:bg-[#1b617dd5] text-white cursor-pointer"
+                                    // disabled={!isFormComplete}
                                     style={{
-                                        opacity: isFormComplete ? 1 : 0.5,
-                                        cursor: isFormComplete ? 'pointer' : 'not-allowed'
+                                        // opacity: isFormComplete ? 1 : 0.5,
+                                        cursor: 'pointer'
                                     }}
                                 >
                                     Simulate

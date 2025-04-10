@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
@@ -46,7 +44,7 @@ export const Tabs = ({
     <>
       <div
         className={cn(
-          "flex flex-row items-center justify-start [perspective:1000px] relative overflow-auto sm:overflow-visible no-visible-scrollbar max-w-full w-full",
+          "flex flex-row items-center justify-center [perspective:1000px] relative overflow-auto sm:overflow-visible no-visible-scrollbar max-w-full w-full",
           containerClassName
         )}
       >
@@ -78,13 +76,19 @@ export const Tabs = ({
                   damping: 30,
                 }}
                 className={cn(
-                  "absolute inset-0 bg-amber-500 dark:bg-zinc-800 rounded-full",
+                  "absolute inset-0 bg-[#1b617d] dark:bg-zinc-800 rounded-full",
                   activeTabClassName
                 )}
               />
             )}
 
-            <span className="relative block text-black dark:text-white">
+            <span
+              className={cn(
+                "relative block",
+                active.value === tab.value ? "text-white" : "text-black",
+                "dark:text-white"
+              )}
+            >
               {tab.title}
             </span>
           </motion.button>

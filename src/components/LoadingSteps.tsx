@@ -121,7 +121,7 @@ const BWLoadingSteps = ({ currentStep }: { currentStep: number }) => {
 const EnhancedBWLoadingSteps = ({ currentStep }: { currentStep: number }) => {
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="space-y-6">
+      <div className="space-y-2">
         <BWLoadingSteps currentStep={currentStep} />
       </div>
     </div>

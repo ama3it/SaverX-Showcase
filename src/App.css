@@ -1,119 +1,85 @@
-html {
+.app-container {
+  height: 100vh;
+  overflow-y: scroll;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
-}
-
-.app-container {
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-.main-container {
-  width: 100%;
-}
-
-.intro-section {
-  min-height: 100vh;
-  width: 100%;
   position: relative;
-  z-index: 2;
-  background-color: #fff;
 }
 
-.transition-section {
+.section {
+  height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
-  z-index: 1;
 }
 
 .scroll-container {
-  position: relative;
-  height: 400vh;
-  transition: transform 0.5s cubic-bezier(0.43, 0.13, 0.23, 0.96);
+  height: 100%;
 }
 
 .component-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
   height: 100vh;
+  width: 100%;
+  scroll-snap-align: start;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  will-change: transform, opacity;
-  transition: all 0.5s cubic-bezier(0.43, 0.13, 0.23, 0.96);
+  position: relative;
+  z-index: 1;
+  transition: opacity 0.2s ease;
+  opacity: 1;
 }
 
-.component-wrapper>* {
-  pointer-events: auto;
-}
-
-
-.scroll-arrow {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+.component-wrapper.active {
+  transform: scale(1);
   z-index: 10;
-  color: #fff;
-  background:#1B617D ;
-  padding: 0.5rem;
-  border-radius: 50%;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+/* Navigation Controls */
+.navigation-controls {
+
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  z-index: 999; /* Ensure it's above everything */
+  /* background-color: rgba(0, 0, 0, 0.7); */
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.nav-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 150px;
+  height: 40px;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  outline: none;
+  background-color: #000;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 16px;
 }
 
-.scroll-arrow:hover {
-  background: rgba(255, 255, 255, 0.8);
-  transform: scale(1.1);
+.nav-button:hover:not(:disabled) {
+  background-color: #F8FAFC;
   color: #000;
 }
 
-.scroll-arrow-prev {
-  position: fixed;
-  bottom: 2rem;
-  right: 6rem;
-  z-index: 10;
-  color: #fff;
-  background:#1B617D ;
-  padding: 0.5rem;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.nav-button:active:not(:disabled) {
+  transform: translateY(1px);
 }
 
-.scroll-arrow.disabled {
-  pointer-events: none;
+.nav-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-@layer base {
-  :root {
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-  }
-
-  .dark {
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-  }
-}
-
-@media (max-width: 768px) {
-  body {
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-  }
-}
