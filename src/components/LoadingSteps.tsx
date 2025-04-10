@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 export const steps = [
   { title: "Collecting parameters", description: "Gathering input data for simulation" },
   { title: "Initializing model", description: "Setting up the simulation environment" },
-  { title: "Invoking the ai model", description: "Processing the data through our model" },
+  { title: "Invoking the AI model", description: "Processing the data through our model" },
   { title: "Neural Network Processing", isNeuralNet: true },
   { title: "Setting Up integration", description: "Communicating the optimal settings to HVAC system." },
 ];

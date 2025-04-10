@@ -93,16 +93,6 @@ const App = () => {
     
       const sectionIndex = Math.round(scrollPosition / windowHeight)
 
-      // Prevent scrolling to result section (index 3) if no data and not loading
-      if (sectionIndex === 3 && !resultData && !loading) {
-        // Force scroll back to simulator section
-        window.scrollTo({
-          top: 2 * windowHeight,
-          behavior: 'smooth'
-        })
-        return
-      }
-
       const newSection = Math.max(0, Math.min(3, sectionIndex))
       if (newSection !== currentSection) {
         setCurrentSection(newSection)
@@ -112,7 +102,7 @@ const App = () => {
     // Use passive listener for better scroll performance
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [currentSection, resultData, loading]) // Add resultData and loading to dependencies
+  }, [currentSection])
 
   const handleScrollClick = () => {
     const nextSection = currentSection + 1;
