@@ -8,6 +8,7 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart"
 import { SaverXPredictionResponse } from "@/lib/reponse"
+import bucketChartData from "@/lib/daydataprocessed"
 
 const chartConfig = {
     desktop: {
@@ -23,13 +24,14 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function DailyGraph({ chartData }: { chartData: SaverXPredictionResponse }) {
-    console.log("DailyGraph", chartData?.two_day_chart_data)
+    const processedData = bucketChartData(chartData.two_day_chart_data, 30);
+
     return (
 
         <ChartContainer config={chartConfig} className="h-[40vh] w-full">
             <AreaChart
                 accessibilityLayer
-                data={chartData?.two_day_chart_data}
+                data={processedData}
                 margin={{
                     left: 12,
                     right: 12,
@@ -38,11 +40,15 @@ export function DailyGraph({ chartData }: { chartData: SaverXPredictionResponse 
                 <CartesianGrid vertical={false} />
                 <XAxis
                     dataKey="date"
+                    interval={5}
                     tickLine={false}
                     tickMargin={10}
                     axisLine={false}
                     tickFormatter={(value) => {
-                        return value.split('-').slice(-1)[0]; // Gets the last part after splitting by '-'
+                        const date = new Date(value);
+                        const minutes = date.getMinutes();
+                        const isHalfHour = minutes === 0 || minutes === 30;
+                        return isHalfHour ? date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
                     }}
                 />
                 <ChartTooltip

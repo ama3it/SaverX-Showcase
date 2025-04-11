@@ -22,7 +22,6 @@ const chartConfig = {
 
 
 export function MonthlyCharts({ chartData }: { chartData: SaverXPredictionResponse }) {
-    console.log("MonthlyCharts", chartData.monthly_chart_data)
     return (
         <ChartContainer config={chartConfig} className="h-[40vh] w-full">
             <BarChart accessibilityLayer data={chartData?.monthly_chart_data}>
