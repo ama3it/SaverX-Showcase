@@ -59,7 +59,7 @@ const malldata = [
     },
     {
         name: "Working Hours",
-        value: "13 hours/day"
+        value: "18 hours/day"
     },
     {
         name: "No of floors",
@@ -138,8 +138,8 @@ export function InfoTable({ buildingdata }: TableDemoProps) {
             <TableBody>
                 {buildingdata.map((data) => (
                     <TableRow key={data.name}>
-                        <TableCell className="font-medium text-xl text-gray-500 ">{data.name}:</TableCell>
-                        <TableCell className="text-xl text-gray-700 ">{data.value}</TableCell>
+                        <TableCell className="text-base font-bold">{data.name}:</TableCell>
+                        <TableCell className="text-base font-normal">{data.value}</TableCell>
                     </TableRow>
                 ))}
             </TableBody>

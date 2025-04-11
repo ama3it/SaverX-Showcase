@@ -29,7 +29,7 @@ const ProgressiveMultiStepLoader = () => {
     React.useEffect(() => {
         if (step < steps.length - 1) {
             const isNeuralStep = steps[step]?.isNeuralNet;
-            const delay = isNeuralStep ? 15000 : 1000;
+            const delay = isNeuralStep ? 22000 : 1000;
 
             const timer = setTimeout(() => setStep((prev) => prev + 1), delay);
             return () => clearTimeout(timer);
@@ -52,7 +52,7 @@ const SimulationResult: React.FC<ResultProps> = ({ loading, chartData }) => {
             {
                 chartData ?
                 <Card className="overflow-hidden border-none rounded-none shadow-none w-full">
-                            <p className="text-xl font-bold text-center mb-10"> Simulation Result</p>
+                            <p className="text-xl font-bold text-center mb-10"> Result</p>
                         <CardContent className="px-2">
                             {
                                 activeChart === "monthly" ?
@@ -65,20 +65,20 @@ const SimulationResult: React.FC<ResultProps> = ({ loading, chartData }) => {
                         <CardHeader className="flex flex-col items-stretch space-y-0  p-0 sm:flex-row">
                             <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
 
-                                <CardDescription>
-                                    <p className="text-xl  text-black flex items-center gap-2">
-                                        <Square className="h-4 w-4 fill-[#F0842C] stroke-0" /> Energy Consumption (in its original state): {chartData?.Energy_Consumption_without_SaverX || 0} kWh
+                                <CardDescription className="text-base">
+                                    <p className="text-black flex items-center gap-2">
+                                        <Square className="h-4 w-4 fill-[#F0842C] stroke-0" /> Energy Consumption (in its original state): <span className="font-bold">{chartData?.Energy_Consumption_without_SaverX || 0} kWh </span> 
                                     </p>
-                                    <p className="text-xl  text-black flex items-center gap-2">
-                                        <Square className="h-4 w-4 fill-[#1B617D] stroke-0" /> Energy Consumption (Saverx integrated): {chartData?.Predicted_Energy_Consumption_with_SaverX || 0} kWh
+                                    <p className="text-black flex items-center gap-2">
+                                        <Square className="h-4 w-4 fill-[#1B617D] stroke-0" /> Energy Consumption (Saverx integrated): <span className="font-bold">{chartData?.Predicted_Energy_Consumption_with_SaverX || 0} kWh </span> 
                                     </p>
-                                    <p className="text-xl font-bold text-black">Savings: {chartData.Predicted_Savings || 0} %</p>
+                                    <p className="text-black flex items-center gap-2"> <Square className="h-4 w-4 fill-[#000000]" />Savings: <span className="font-bold"> {chartData.Predicted_Savings || 0} %</span> </p>
                                 </CardDescription>
                             </div>
                             <div className="flex">
 
                                 <button
-                                    className={" cursor-pointer elative z-30 flex flex-1 flex-col justify-center gap-1  px-2 py-2 text-left sm:px-4 sm:py-4" + (activeChart === "monthly" ? " bg-muted" : "")}
+                                    className={" cursor-pointer elative z-30 flex flex-1 flex-col justify-center gap-1  px-2 py-2 text-left sm:px-4 sm:py-4 h-[5vh] " + (activeChart === "monthly" ? " bg-muted" : "")}
                                     onClick={() => setActiveChart("monthly")}
                                 >
                                     <span className="text-md font-bold text-foreground">
@@ -87,7 +87,7 @@ const SimulationResult: React.FC<ResultProps> = ({ loading, chartData }) => {
                                 </button>
 
                                 <button
-                                    className={" cursor-pointer relative z-30 flex flex-1 flex-col justify-center gap-1  px-6 py-4 text-left  sm:px-8 sm:py-6" + (activeChart === "daily" ? " bg-muted" : "")}
+                                    className={" cursor-pointer relative z-30 flex flex-1 flex-col justify-center gap-1  px-6 py-4 text-left  sm:px-8 sm:py-6 h-[5vh]" + (activeChart === "daily" ? " bg-muted" : "")}
 
                                     onClick={() => setActiveChart("daily")}
                                 >

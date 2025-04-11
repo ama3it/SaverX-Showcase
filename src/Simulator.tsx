@@ -143,11 +143,9 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
 
                                 <Button
                                     type="submit"
-                                    className="w-full bg-[#1b617d] hover:bg-[#1b617dd5] text-white cursor-pointer"
-                                    // disabled={!isFormComplete}
+                                    className="w-full rounded-none bg-[#000] text-white cursor-pointer hover:bg-[#F8FAFC] hover:text-black"
                                     style={{
-                                        // opacity: isFormComplete ? 1 : 0.5,
-                                        cursor: 'pointer'
+                                        cursor: 'pointer',
                                     }}
                                 >
                                     Simulate

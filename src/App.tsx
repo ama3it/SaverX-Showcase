@@ -12,6 +12,9 @@ import MobileBlocker from './components/MobileBlocker'
 import { SimulationFormValues } from './lib/validation'
 import { SaverXPredictionResponse } from './lib/reponse'
 
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { RefreshCw } from "lucide-react"; // Example icon from Lucide
+
 const App = () => {
   const sectionRefs = [useRef(null), useRef(null), useRef(null), useRef(null)]
   const appContainerRef = useRef<HTMLDivElement>(null)
@@ -40,7 +43,7 @@ const App = () => {
   const handleNext = () => {
     if (currentSection === 2 && resultData === null) {
       // Prevent scrolling to Section 3 if resultData is null
-      alert('Enter the simulation info before proceeding.');
+      alert('Enter the information before proceeding to simulation.');
       return;
     }
 
@@ -69,7 +72,7 @@ const App = () => {
 
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
 
-      await new Promise(resolve => setTimeout(resolve, 20000)) // Simulated delay
+      await new Promise(resolve => setTimeout(resolve, 30000)) // Simulated delay
       const result = await response.json()
       setResultData(result)
     } catch (err) {
@@ -167,24 +170,32 @@ const App = () => {
       })}
 
       {
-        currentSection === 3 ? <>
-          <button
-            className="nav-button"
-            onClick={() => window.location.reload()}
-          >
-            Refresh Page
-          </button>
-        </> :
+        (currentSection === 0 || currentSection === 1) && (
           <button
             className="nav-button"
             onClick={handleNext}
-            disabled={currentSection === 3}
           >
             {currentSection === 0 ? "Let's Begin" : "Continue"}
           </button>
-
+        )
       }
-
+      {
+        currentSection === 3 && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                className="refresh-button flex items-center justify-center p-2 rounded-none bg-black text-white group hover:bg-white hover:text-black"
+                onClick={() => window.location.reload()}
+              >
+                <RefreshCw className="w-5 h-5 text-inherit" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <span>Try again</span>
+            </TooltipContent>
+          </Tooltip>
+        )
+      }
 
     </div>
   )
