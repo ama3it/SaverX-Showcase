@@ -62,6 +62,8 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
                                                     <SelectItem value="tokyo">Tokyo (JP)</SelectItem>
                                                     <SelectItem value="houston">Houston (US)</SelectItem>
                                                     <SelectItem value="dusseldorf">Dusseldorf (DE)</SelectItem>
+                                                    <SelectItem value="bahrain">Bahrain (BH)</SelectItem>
+                                                    <SelectItem value="singapore">Singapore (SG)</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                             <FormMessage />

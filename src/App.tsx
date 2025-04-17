@@ -21,7 +21,8 @@ const App = () => {
   const [currentSection, setCurrentSection] = useState(0)
   const [loading, setLoading] = useState<boolean>(false)
   const [resultData, setResultData] = useState<SaverXPredictionResponse | null>(null)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState<boolean>(false)
+
   const { selectedBuilding } = useBuilding()
 
   // This function manually controls scrolling within the container
@@ -85,12 +86,23 @@ const App = () => {
   }
 
   useEffect(() => {
-    const updateMobile = () => setIsMobile(isMobileDevice())
-    updateMobile()
-    window.addEventListener('resize', updateMobile)
-    return () => window.removeEventListener('resize', updateMobile)
+    // Check initial state
+    setIsMobile(isMobileDevice())
+    
+    // Set up event listener to detect orientation/resize changes
+    const handleResize = () => {
+      setIsMobile(isMobileDevice())
+    }
+    
+    window.addEventListener('resize', handleResize)
+    window.addEventListener('orientationchange', handleResize)
+    
+    // Clean up
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('orientationchange', handleResize)
+    }
   }, [])
-
   // Add scroll event listener to detect current section
   useEffect(() => {
     const handleScroll = () => {
@@ -135,6 +147,8 @@ const App = () => {
       if (maxVisibleSection !== currentSection) {
         setCurrentSection(maxVisibleSection)
       }
+
+
     }
 
     const container = appContainerRef.current
@@ -143,10 +157,15 @@ const App = () => {
       return () => container.removeEventListener('scroll', handleScroll)
     }
   }, [currentSection, resultData, loading])
+  
 
-  if (isMobile) return <MobileBlocker />
+  // Early return for mobile devices
+  if (isMobile) {
+    return <MobileBlocker />
+  }
 
   return (
+    
     <div ref={appContainerRef} className="app-container">
       {[SaverXIntro, BuildingComponent, Simulator, SimulationResult].map((_Component, index) => {
         const ref = sectionRefs[index]
@@ -180,7 +199,7 @@ const App = () => {
         )
       }
       {
-        currentSection === 3 && (
+        currentSection === 3 && !loading && (
           <Tooltip>
             <TooltipTrigger asChild>
               <button
