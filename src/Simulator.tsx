@@ -70,7 +70,8 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
                                         </FormItem>
                                     )}
                                 />
-
+                                <Label className="mt-2"> Select baseline settings</Label>
+                                <p className="text-sm text-muted-foreground">Three well known paramters have been selected for simulation purposes. In real-time, it could be more number of HVAC parameters. </p>
                                 <FormField
                                     control={form.control}
                                     name="chilledWaterTemp"

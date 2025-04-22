@@ -2,9 +2,9 @@ import { FlipWords } from "@/components/ui/flip-words";
 
 const SaverXIntro = () => {
   const words = [
-    "AI edge device that can Understands HVAC needs in real-time, optimizing energy consumption smartly.",
-    "Works with any building, saving energy costs effectively from day one.",
-    "Integrates with control systems without disrupting HVAC performance at all."
+    "AI edge device that can understand HVAC needs in real-time, optimizing energy consumption smartly.",
+    "Works with any building, saving energy cost effectively from Day 1.",
+    "Integrates with control systems without disrupting the HVAC performance."
   ];
 
   return (
@@ -33,7 +33,7 @@ const SaverXIntro = () => {
                   Explore the interface to understand the core features and impact of SaverX. You'll see
                   how it intelligently analyzes real-time building data, makes real-time changes in settings
                   of the HVAC systems, and seamlessly integrates with your existing infrastructure to
-                  optimize energy usage.
+                  optimize energy usage while meeting your required thermal comfort.
                 </p>
               </div>
             </div>
