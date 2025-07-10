@@ -11,6 +11,9 @@ export const simulationFormSchema = z.object({
   coolingWaterTemp: z.enum(["29", "30", "31"], {
     required_error: "Please select cooling water temperature",
   }),
+  boilerOutletSetpointTemp:  z.enum(["50", "60", "70","80"], {
+    required_error: "Please select boiler outlet setpoint temperature",
+  }),
   ahuOpening: z.enum(["80", "90", "100"], {
     required_error: "Please select AHU opening percentage",
   }),

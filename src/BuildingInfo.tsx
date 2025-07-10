@@ -31,6 +31,10 @@ const officedata = [
         value: "2 Water Cooled Chillers"
     },
     {
+        name: "Boilers",
+        value: "1 Hot Water Boiler"
+    },
+    {
         name: "AHUs",
         value: "11"
     },
@@ -52,6 +56,10 @@ const malldata = [
     {
         name: "Chillers",
         value: "2 Water Cooled Chillers"
+    },
+    {
+        name: "Boilers",
+        value: "1 Hot Water Boiler"
     },
     {
         name: "AHUs",

@@ -120,6 +120,32 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
                                     )}
                                 />
 
+
+                                <FormField
+                                    control={form.control}
+                                    name="boilerOutletSetpointTemp"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <Label>Boiler Outlet Setpoint Temperature (°C)</Label>
+                                            <FormControl>
+                                                <RadioGroup
+                                                    onValueChange={field.onChange}
+                                                    value={field.value}
+                                                    className="flex flex-col space-y-1"
+                                                >
+                                                    {["50", "60", "70", "80"].map((opening) => (
+                                                        <Label key={opening} className="flex items-center gap-2">
+                                                            <RadioGroupItem value={opening} /> {opening} °C
+                                                        </Label>
+                                                    ))}
+                                                </RadioGroup>
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
+
                                 <FormField
                                     control={form.control}
                                     name="ahuOpening"
@@ -143,6 +169,8 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
                                         </FormItem>
                                     )}
                                 />
+
+
 
                                 <Button
                                     type="submit"
