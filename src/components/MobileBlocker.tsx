@@ -2,7 +2,7 @@ import React from 'react';
 
 const MobileBlocker: React.FC = () => {
   return (
-    <div className="fixed inset-0 z-50 flex flex-col justify-center items-center p-5 text-center bg-white">
+    <div className="fixed inset-0 z-50 flex flex-col justify-center items-center p-5 text-center bg-white text-black">
       <svg 
         className="w-16 h-16 mb-4 text-gray-500" 
         fill="none" 
@@ -20,7 +20,7 @@ const MobileBlocker: React.FC = () => {
       <h1 className="text-3xl font-bold mb-4">Desktop Experience Only</h1>
       <p className="text-gray-600 max-w-md mb-4">
         This application requires a larger screen for the optimal experience. 
-        Please switch to a desktop or laptop computer to access all features.
+        Please switch to a desktop or laptop to access all features.
       </p>
       <div className="mt-2 p-3 bg-gray-100 rounded-lg text-sm text-gray-500">
         If you believe this is an error, please refresh the page or try rotating your device.

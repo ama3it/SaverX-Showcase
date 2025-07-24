@@ -30,19 +30,19 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
             </div>
 
             {/* Right Side - Tabs and Content */}
-            <div className="w-full md:w-1/2  flex items-center justify-center"> {/* reduced padding */}
-                <Card className="overflow-hidden p-0 border-none rounded-none shadow-none w-full max-w-md"> {/* added max-width */}
-                    <CardHeader className=""> {/* reduced padding */}
-                        <CardTitle className="text-xl font-bold text-center"> {/* reduced text size */}
+            <div className="w-full md:w-1/2 flex items-center justify-center"> 
+                <Card className="overflow-hidden p-0 border-none rounded-none shadow-none w-full max-w-md"> 
+                    <CardHeader className=""> 
+                        <CardTitle className="text-xl font-bold text-center"> 
                             Simulation
                         </CardTitle>
-                        <CardDescription className="text-sm text-center"> {/* reduced text size */}
+                        <CardDescription className="text-sm text-center">
                             Fill in the details below to run the simulation.
                         </CardDescription>
                     </CardHeader>
-                    <CardContent className=""> {/* reduced padding */}
+                    <CardContent className=""> 
                         <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSimulate)} className="flex flex-col gap-2 overflow-auto"> {/* reduced gap */}
+                            <form onSubmit={form.handleSubmit(onSimulate)} className="flex flex-col gap-6 overflow-auto">
                                 <FormField
                                     control={form.control}
                                     name="location"
@@ -70,8 +70,10 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
                                         </FormItem>
                                     )}
                                 />
-                                <Label className="mt-2"> Select baseline settings</Label>
-                                <p className="text-sm text-muted-foreground">Three well known paramters have been selected for simulation purposes. In real-time, it could be more number of HVAC parameters. </p>
+                                <div>
+                                <Label> Select baseline settings</Label>
+                                <p className="text-xs text-muted-foreground">Three well known paramters have been selected for simulation purposes. In real-time, it could be more number of HVAC parameters. </p>
+                                </div>
                                 <FormField
                                     control={form.control}
                                     name="chilledWaterTemp"
@@ -82,7 +84,7 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
                                                 <RadioGroup
                                                     onValueChange={field.onChange}
                                                     value={field.value}
-                                                    className="flex flex-col space-y-1"
+                                                    className="flex flex-row space-y-1"
                                                 >
                                                     {["6", "7", "8", "9"].map((temp) => (
                                                         <Label key={temp} className="flex items-center gap-2">
@@ -106,7 +108,7 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
                                                 <RadioGroup
                                                     onValueChange={field.onChange}
                                                     value={field.value}
-                                                    className="flex flex-col space-y-1"
+                                                    className="flex flex-row space-y-1"
                                                 >
                                                     {["29", "30", "31"].map((temp) => (
                                                         <Label key={temp} className="flex items-center gap-2">
@@ -131,7 +133,7 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
                                                 <RadioGroup
                                                     onValueChange={field.onChange}
                                                     value={field.value}
-                                                    className="flex flex-col space-y-1"
+                                                    className="flex flex-row space-y-1"
                                                 >
                                                     {["50", "60", "70", "80"].map((opening) => (
                                                         <Label key={opening} className="flex items-center gap-2">
@@ -156,7 +158,7 @@ const Simulator: React.FC<SimulatorProps> = ({ onSimulate }) => {
                                                 <RadioGroup
                                                     onValueChange={field.onChange}
                                                     value={field.value}
-                                                    className="flex flex-col space-y-1"
+                                                    className="flex flex-row space-y-1"
                                                 >
                                                     {["80", "90", "100"].map((opening) => (
                                                         <Label key={opening} className="flex items-center gap-2">

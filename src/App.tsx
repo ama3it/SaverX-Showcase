@@ -12,7 +12,7 @@ import MobileBlocker from './components/MobileBlocker'
 import { SimulationFormValues } from './lib/validation'
 import { SaverXPredictionResponse } from './lib/reponse'
 
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { RefreshCw } from "lucide-react"; // Example icon from Lucide
 
 const App = () => {
@@ -21,7 +21,8 @@ const App = () => {
   const [currentSection, setCurrentSection] = useState(0)
   const [loading, setLoading] = useState<boolean>(false)
   const [resultData, setResultData] = useState<SaverXPredictionResponse | null>(null)
-  const [isMobile, setIsMobile] = useState<boolean>(false)
+  const [simulationFormData, setSimulationFormData] = useState<SimulationFormValues | null>(null)
+  const [isMobile, setIsMobile] = useState<boolean>(isMobileDevice())
 
   const { selectedBuilding } = useBuilding()
 
@@ -55,6 +56,7 @@ const App = () => {
 
   const handleSimulation = async (data: SimulationFormValues) => {
     setLoading(true)
+    setSimulationFormData(data)
     scrollToSection(3)
 
     try {
@@ -86,17 +88,14 @@ const App = () => {
   }
 
   useEffect(() => {
-    // Check initial state
-    setIsMobile(isMobileDevice())
-    
     // Set up event listener to detect orientation/resize changes
     const handleResize = () => {
       setIsMobile(isMobileDevice())
     }
-    
+
     window.addEventListener('resize', handleResize)
     window.addEventListener('orientationchange', handleResize)
-    
+
     // Clean up
     return () => {
       window.removeEventListener('resize', handleResize)
@@ -157,7 +156,7 @@ const App = () => {
       return () => container.removeEventListener('scroll', handleScroll)
     }
   }, [currentSection, resultData, loading])
-  
+
 
   // Early return for mobile devices
   if (isMobile) {
@@ -165,58 +164,59 @@ const App = () => {
   }
 
   return (
-    
-    <div ref={appContainerRef} className="app-container">
-      {[SaverXIntro, BuildingComponent, Simulator, SimulationResult].map((_Component, index) => {
-        const ref = sectionRefs[index]
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const isVisible = useInView(ref, { margin: '-30% 0px -30% 0px' })
-        return (
-          <motion.div
-            key={index}
-            ref={ref}
-            className="section"
-            initial={{ y: 100, opacity: 0 }}
-            animate={isVisible ? { y: 0, opacity: 1 } : { y: 100, opacity: 0 }}
-            transition={{ duration: 0.6, ease: 'easeInOut' }}
-          >
-            {index === 0 && <SaverXIntro />}
-            {index === 1 && <BuildingComponent />}
-            {index === 2 && <Simulator onSimulate={handleSimulation} />}
-            {index === 3 && <SimulationResult loading={loading} chartData={resultData} />}
-          </motion.div>
-        )
-      })}
+    <TooltipProvider>
+      <div ref={appContainerRef} className="app-container">
+        {[SaverXIntro, BuildingComponent, Simulator, SimulationResult].map((_Component, index) => {
+          const ref = sectionRefs[index]
+          // eslint-disable-next-line react-hooks/rules-of-hooks
+          const isVisible = useInView(ref, { margin: '-30% 0px -30% 0px' })
+          return (
+            <motion.div
+              key={index}
+              ref={ref}
+              className="section"
+              initial={{ y: 100, opacity: 0 }}
+              animate={isVisible ? { y: 0, opacity: 1 } : { y: 100, opacity: 0 }}
+              transition={{ duration: 0.6, ease: 'easeInOut' }}
+            >
+              {index === 0 && <SaverXIntro />}
+              {index === 1 && <BuildingComponent />}
+              {index === 2 && <Simulator onSimulate={handleSimulation} />}
+              {index === 3 && <SimulationResult loading={loading} chartData={resultData} formData={simulationFormData} />}
+            </motion.div>
+          )
+        })}
 
-      {
-        (currentSection === 0 || currentSection === 1) && (
-          <button
-            className="nav-button"
-            onClick={handleNext}
-          >
-            {currentSection === 0 ? "Let's Begin" : "Continue"}
-          </button>
-        )
-      }
-      {
-        currentSection === 3 && !loading && (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                className="refresh-button flex items-center justify-center p-2 rounded-none bg-black text-white group hover:bg-white hover:text-black"
-                onClick={() => window.location.reload()}
-              >
-                <RefreshCw className="w-5 h-5 text-inherit" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <span>Try again</span>
-            </TooltipContent>
-          </Tooltip>
-        )
-      }
+        {
+          (currentSection === 0 || currentSection === 1) && (
+            <button
+              className="nav-button"
+              onClick={handleNext}
+            >
+              {currentSection === 0 ? "Let's Begin" : "Continue"}
+            </button>
+          )
+        }
+        {
+          currentSection === 3 && !loading && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  className="refresh-button flex items-center justify-center p-2 rounded-none bg-black text-white group hover:bg-white hover:text-black"
+                  onClick={() => window.location.reload()}
+                >
+                  <RefreshCw className="w-5 h-5 text-inherit" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <span>Try again</span>
+              </TooltipContent>
+            </Tooltip>
+          )
+        }
 
-    </div>
+      </div>
+    </TooltipProvider>
   )
 }
 

@@ -11,6 +11,7 @@ import { SaverXPredictionResponse } from "./lib/reponse";
 import { MonthlyCharts } from "./ResultCharts/MonthlyCharts";
 import { DailyGraph } from "./ResultCharts/DailyGraph";
 import { Square } from "lucide-react";
+import { SimulationFormValues } from "./lib/validation";
 
 export const description = "An interactive bar chart"
 
@@ -18,6 +19,7 @@ export const description = "An interactive bar chart"
 interface ResultProps {
     loading: boolean;
     chartData: SaverXPredictionResponse | null;
+    formData: SimulationFormValues | null;
 }
 
 
@@ -40,8 +42,35 @@ const ProgressiveMultiStepLoader = () => {
 };
 
 
-const SimulationResult: React.FC<ResultProps> = ({ loading, chartData }) => {
+const SimulationResult: React.FC<ResultProps> = ({ loading, chartData, formData }) => {
     const [activeChart, setActiveChart] = React.useState<string>("monthly")
+
+    // Calculate adjusted energy consumption based on boiler temperature
+    const getAdjustedEnergyConsumption = (baseConsumption: number) => {
+        if (!formData?.boilerOutletSetpointTemp) return baseConsumption;
+        
+        const boilerTemp = parseInt(formData.boilerOutletSetpointTemp);
+        let adjustmentPercentage = 0;
+        
+        switch (boilerTemp) {
+            case 50:
+                adjustmentPercentage = -5;
+                break;
+            case 60:
+                adjustmentPercentage = -2.5;
+                break;
+            case 70:
+                adjustmentPercentage = 2.5;
+                break;
+            case 80:
+                adjustmentPercentage = 5;
+                break;
+            default:
+                return baseConsumption;
+        }
+        
+        return baseConsumption * (1 + adjustmentPercentage / 100);
+    };
 
     if (loading) {
         return <ProgressiveMultiStepLoader />;
@@ -67,7 +96,7 @@ const SimulationResult: React.FC<ResultProps> = ({ loading, chartData }) => {
 
                                 <CardDescription className="text-base">
                                     <p className="text-black flex items-center gap-2">
-                                        <Square className="h-4 w-4 fill-[#F0842C] stroke-0" /> Energy Consumption (in its original state): <span className="font-bold">{chartData?.Energy_Consumption_without_SaverX || 0} kWh </span> 
+                                        <Square className="h-4 w-4 fill-[#F0842C] stroke-0" /> Energy Consumption (in its original state): <span className="font-bold">{getAdjustedEnergyConsumption(chartData?.Energy_Consumption_without_SaverX || 0).toFixed(2)} kWh </span> 
                                     </p>
                                     <p className="text-black flex items-center gap-2">
                                         <Square className="h-4 w-4 fill-[#1B617D] stroke-0" /> Energy Consumption (SaverX integrated): <span className="font-bold">{chartData?.Predicted_Energy_Consumption_with_SaverX || 0} kWh </span> 
